@@ -18,8 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/loginUser";
-import { hitProtectedRoute } from "@/actions/hitProtectedRoute";
-// import { hitProtectedRouteFromClient } from "@/utils/hitProtectedRouteFromClient";
+import Link from "next/link";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -66,7 +65,7 @@ export default function LoginPageView() {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="foy4748" {...field} />
+                    <Input placeholder="foy4748" type={"text"} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -85,12 +84,22 @@ export default function LoginPageView() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+
+            <p>
+              You don't have an account? Please,{" "}
+              <Link className="text-link" href="/register">
+                Register
+              </Link>{" "}
+              .
+            </p>
+
+            <div className="flex">
+              <Button className="flex-1" type="submit">
+                Submit
+              </Button>
+            </div>
           </form>
         </Form>
-        <Button onClick={async () => await hitProtectedRoute()} type="button">
-          Hit PROTECTED Route
-        </Button>
       </div>
     </section>
   );
