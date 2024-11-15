@@ -10,27 +10,20 @@ const nextConfig: NextConfig = {
       ],
     },
   },
-  // async headers() {
-  //   return [
-  //     {
-  //       source: "/api/:path*",
-  //       headers: [
-  //         {
-  //           key: "Access-Control-Allow-Origin",
-  //           value: "https://auth-test-frontend.vercel.app",
-  //         },
-  //         {
-  //           key: "Access-Control-Allow-Methods",
-  //           value: "GET,POST,PUT,DELETE,OPTIONS",
-  //         },
-  //         {
-  //           key: "Access-Control-Allow-Headers",
-  //           value: "Content-Type, Authorization",
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  /* Image Related */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+      },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co.com",
+      },
+    ],
+  },
+  /* END of Image Related */
 };
 
 export default nextConfig;
