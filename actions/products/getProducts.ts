@@ -9,3 +9,11 @@ export const getProductList = async () => {
 
   return data;
 };
+
+export const getSingleProduct = async (id: string) => {
+  const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+  const res = await fetch(`${S}/product-detail/${id}`);
+  const data: TSingleProduct = await res.json();
+
+  return data;
+};

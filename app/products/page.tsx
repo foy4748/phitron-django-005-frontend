@@ -13,27 +13,28 @@ import Image from "next/image";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import { TSingleProduct } from "@/types/product";
+import Link from "next/link";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 const repeat = (arr: TSingleProduct[], n: number) =>
   Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
 
-export default async function ProductCard({ className, ...props }: CardProps) {
+export default async function ProductCardGrid() {
   const product_list = await getProductList();
   return (
     <>
       <GridSystem>
-        {repeat(product_list, 9).map((p) => {
+        {repeat(product_list, 9).map((p, idx) => {
           return (
-            <Col key={p.id}>
-              <Card {...props}>
+            <Col key={idx}>
+              <Card>
                 <Image
                   src={p.image_url}
                   alt={`${p.product_name} by ${p.product_owner}`}
                   width={300}
                   height={300}
-                  className="w-full"
+                  className="w-full object-scale-down"
                 />
                 <CardHeader>
                   <CardTitle>{p.product_name}</CardTitle>
@@ -45,7 +46,9 @@ export default async function ProductCard({ className, ...props }: CardProps) {
                   <CardDescription>{p.description}</CardDescription>
                 </CardContent>
                 <CardFooter className="flex justify-end">
-                  <Button>Details</Button>
+                  <Link href={`/products/${p.id}`}>
+                    <Button>Details</Button>
+                  </Link>
                 </CardFooter>
               </Card>
             </Col>
