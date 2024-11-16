@@ -1,17 +1,25 @@
-import { getSingleProduct } from "@/actions/products/getProducts";
 import Col from "@/components/customUI/GridSystem/Col";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import { Button } from "@/components/ui/button";
+import { TProductOwner, TSingleProduct } from "@/types/product";
 import Image from "next/image";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
+export const getSingleProduct = async (id: string) => {
+  const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+  const res = await fetch(`${S}/product-detail/${id}`);
+  const data: TSingleProduct = await res.json();
+
+  return data;
+};
+
 export default async function ProductDetails({ params }: Props) {
   const { id } = await params;
   const data = await getSingleProduct(id);
-  const { product_owner }: { product_owner: TProductOwner } = data;
+  const { product_owner } = data as { product_owner: TProductOwner };
   return (
     <>
       <GridSystem>

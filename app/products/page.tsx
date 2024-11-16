@@ -8,14 +8,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getProductList } from "@/actions/products/getProducts";
 import Image from "next/image";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import { TSingleProduct } from "@/types/product";
 import Link from "next/link";
 
-type CardProps = React.ComponentProps<typeof Card>;
+// Product Fetch Func
+export const getProductList = async () => {
+  const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
+  const res = await fetch(`${S}/product-list/`);
+  const data: TSingleProduct[] = await res.json();
+
+  return data;
+};
 
 const repeat = (arr: TSingleProduct[], n: number) =>
   Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
