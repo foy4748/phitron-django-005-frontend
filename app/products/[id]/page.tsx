@@ -3,6 +3,7 @@ import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import { Button } from "@/components/ui/button";
 import { TProductOwner, TSingleProduct } from "@/types/product";
 import Image from "next/image";
+import AddToCartButton from "./components/AddToCartButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -48,7 +49,7 @@ export default async function ProductDetails({ params }: Props) {
           <h2>Description</h2>
           <p>{data.description}</p>
           <div className="flex gap-2">
-            <Button>Add to Cart</Button>
+            <AddToCartButton />
             <Button>Buy Now</Button>
           </div>
         </Col>
