@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { TProductOwner, TSingleProduct } from "@/types/product";
 import Image from "next/image";
 import AddToCartButton from "./components/AddToCartButton";
+import ProductReviewList from "./components/ProductReviewList";
+import { AddProductReview } from "./components/AddProductReview";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -24,7 +26,7 @@ export default async function ProductDetails({ params }: Props) {
   return (
     <>
       <GridSystem>
-        <Col className="col-span-6">
+        <Col className="lg:col-span-6">
           <figure className="w-full">
             <Image
               src={data.image_url}
@@ -37,7 +39,7 @@ export default async function ProductDetails({ params }: Props) {
             />
           </figure>
         </Col>
-        <Col className="col-span-6">
+        <Col className="lg:col-span-6">
           <h1>{data?.product_name}</h1>
           <p>
             {" "}
@@ -52,6 +54,12 @@ export default async function ProductDetails({ params }: Props) {
             <AddToCartButton />
             <Button>Buy Now</Button>
           </div>
+        </Col>
+        <Col className="md:col-span-12 lg:col-span-6">
+          <ProductReviewList id={id} />
+        </Col>
+        <Col className="md:col-span-12 lg:col-span-6">
+          <AddProductReview />
         </Col>
       </GridSystem>
     </>
