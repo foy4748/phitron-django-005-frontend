@@ -11,3 +11,8 @@ export type TProductReviewPayload = {
   rating: `${number}` | number;
   product: `${number}` | number;
 };
+
+export type TProductReviewUpdatePayload = {
+  review_text: string;
+  rating: `${number}` | number;
+};

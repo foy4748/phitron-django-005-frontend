@@ -5,7 +5,7 @@ import { TProductOwner, TSingleProduct } from "@/types/product";
 import Image from "next/image";
 import AddToCartButton from "./components/AddToCartButton";
 import ProductReviewList from "./components/ProductReviewList";
-import { AddProductReview } from "./components/AddProductReview";
+import { AddOrUpdateProductReview } from "./components/AddOrUpdateProductReview";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -59,7 +59,8 @@ export default async function ProductDetails({ params }: Props) {
           <ProductReviewList id={id} />
         </Col>
         <Col className="md:col-span-12 lg:col-span-6">
-          <AddProductReview />
+          <AddOrUpdateProductReview />
+          <AddOrUpdateProductReview editMode={true} review_id={1} />
         </Col>
       </GridSystem>
     </>

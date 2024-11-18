@@ -19,6 +19,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Rating } from "@smastrom/react-rating";
 import { useParams } from "next/navigation";
 import { addProductReview } from "@/actions/review/addProductReview";
+import { useEffect } from "react";
+import { getSpecifcReview } from "@/actions/review/getSpecificReview";
+import { updateSpecificReview } from "@/actions/review/updateSpecificReview";
 
 const FormSchema = z.object({
   review_text: z
@@ -33,8 +36,14 @@ const FormSchema = z.object({
   product: z.number(),
 });
 
-export function AddProductReview() {
+type PropTypes = {
+  editMode?: boolean | undefined;
+  review_id?: number | `${number}`;
+};
+
+export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
   const { id } = useParams();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -43,7 +52,16 @@ export function AddProductReview() {
       rating: 5,
     },
   });
-  console.log(form.control);
+
+  useEffect(() => {
+    if (editMode) {
+      const ops = async () => {
+        const data = await getSpecifcReview(Number(review_id));
+        form.reset(data);
+      };
+      ops();
+    }
+  }, [editMode, review_id, form]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -54,7 +72,11 @@ export function AddProductReview() {
         </pre>
       ),
     });
-    await addProductReview(data);
+    if (editMode) {
+      await updateSpecificReview(data, Number(review_id));
+    } else {
+      await addProductReview(data);
+    }
   }
 
   return (
