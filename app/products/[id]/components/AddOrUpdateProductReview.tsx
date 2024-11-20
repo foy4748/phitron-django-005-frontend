@@ -87,7 +87,9 @@ export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
           name="review_text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add a Review</FormLabel>
+              <FormLabel>
+                {editMode ? "Update Review" : "Add a Review"}
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about the product"

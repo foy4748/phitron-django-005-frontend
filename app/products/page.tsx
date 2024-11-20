@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +12,8 @@ import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import { TSingleProduct } from "@/types/product";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import authOptions from "@/lib/authOptions";
 
 // Product Fetch Func
 export const getProductList = async () => {
@@ -28,8 +29,10 @@ const repeat = (arr: TSingleProduct[], n: number) =>
 
 export default async function ProductCardGrid() {
   const product_list = await getProductList();
+  const d = await getServerSession(authOptions);
   return (
     <>
+      <p>{JSON.stringify(d)}</p>
       <GridSystem>
         {repeat(product_list, 9).map((p, idx) => {
           return (

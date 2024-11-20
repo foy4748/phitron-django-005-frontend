@@ -19,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/loginUser";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -33,7 +34,7 @@ export default function LoginPageView() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "foy4748",
+      username: "test",
       password: "TestTest$1",
     },
   });
@@ -49,7 +50,8 @@ export default function LoginPageView() {
         </pre>
       ),
     });
-    await loginUser(data);
+    // await loginUser(data);
+    await signIn("credentials", data);
   }
 
   return (
