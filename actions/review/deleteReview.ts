@@ -1,31 +1,27 @@
 "use server";
 
-import { TProductReviewUpdatePayload } from "@/types/review";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const updateSpecificReview = async (
-  payload: TProductReviewUpdatePayload,
-  id: number | `${number}`
-) => {
+export const deleteReview = async (id: number | `${number}`) => {
   try {
     const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
     const ck = await cookies();
-    const res = await fetch(`${S}/review/review-update/${id}/`, {
+    const res = await fetch(`${S}/review/review-delete/${id}/`, {
       credentials: "include",
-      method: "PATCH",
+      method: "DELETE",
       headers: {
         Authorization: `Token ${ck.get("token")?.value}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
     });
-    const data = await res.json();
     revalidateTag("review-list");
     revalidateTag(`single-review-${id}`);
-    return data;
+    return {
+      status: res.status,
+    };
   } catch (error) {
     console.log(error);
-    return { success: false, message: "Failed to Update Review" };
+    return { success: false, message: "Failed to Delete review" };
   }
 };

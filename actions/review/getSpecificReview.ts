@@ -12,6 +12,9 @@ export const getSpecifcReview = async (id: number | `${number}`) => {
         Authorization: `Token ${ck.get("token")?.value}`,
         "Content-Type": "application/json",
       },
+      next: {
+        tags: [`single-review-${id}`],
+      },
     });
     const data = await res.json();
     return data;
