@@ -1,7 +1,8 @@
 import { loginUser } from "@/actions/loginUser";
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { type Session } from "next-auth";
+import { type JWT } from "next-auth/jwt";
 const authOptions: AuthOptions = {
   session: {
     strategy: "jwt", //(1)
@@ -44,8 +45,24 @@ const authOptions: AuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    session: async ({ session, token }) => {
-      console.log(session, token);
+    jwt: async ({ token, user }) => {
+      // Add additional fields to the token
+      if (user) {
+        token.user_id = String(user?.user_id);
+        token.image_url = String(user?.image_url);
+        token.first_name = String(user?.first_name);
+        token.last_name = String(user?.last_name);
+        token.phone_no = String(user?.phone_no);
+      }
+      return token;
+    },
+    session: async ({ session, token }: { session: Session; token: JWT }) => {
+      // Add additional fields to the session object
+      session.user.user_id = String(token?.user_id);
+      session.user.image_url = String(token?.image_url);
+      session.user.first_name = String(token?.first_name);
+      session.user.last_name = String(token?.last_name);
+      session.user.phone_no = String(token?.phone_no);
       return session;
     },
   },

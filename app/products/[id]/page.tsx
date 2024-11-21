@@ -56,7 +56,7 @@ export default async function ProductDetails({ params }: Props) {
           </div>
         </Col>
         <Col className="md:col-span-12 lg:col-span-6">
-          <ProductReviewList id={id} />
+          <ProductReviewList id={Number(id)} />
         </Col>
         <Col className="md:col-span-12 lg:col-span-6">
           <AddOrUpdateProductReview />
