@@ -8,7 +8,7 @@ const getProductReviewList = async (id: number | `${number}`) => {
       tags: ["review-list"],
     },
   });
-  const data: TProductReview = await res.json();
+  const data: TProductReview[] = await res.json();
 
   return data;
 };
@@ -21,9 +21,9 @@ export default async function ProductReviewList({ id }: PropType) {
     <>
       {data.map((r) => {
         return (
-          <div key={r.id} className="flex">
-            <p>{r.review_text}</p>
-            <DeleteReviewButton id={Number(r.id)} />
+          <div key={r?.id} className="flex">
+            <p>{r?.review_text}</p>
+            <DeleteReviewButton id={Number(r?.id)} reviewer={r?.reviewer} />
           </div>
         );
       })}
