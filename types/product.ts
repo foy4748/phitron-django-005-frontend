@@ -12,7 +12,7 @@ export type TProductOwner = {
   people_info: TPeopleInfo;
 };
 
-type TProductCategory = {
+export type TProductCategory = {
   id: number | `${number}`;
   category: string;
 };
@@ -21,9 +21,18 @@ export type TSingleProduct = {
   id: number;
   product_name: string;
   image_url: string;
-  unit_price: string;
+  unit_price: number | `${number}`;
   unit_name: string;
   description: string;
   product_owner: number | TProductOwner;
+  category: number | TProductCategory;
+};
+
+export type TProductPayload = {
+  product_name: string;
+  image_url: string;
+  unit_price: number | `${number}`;
+  unit_name: string;
+  description: string;
   category: number | TProductCategory;
 };
