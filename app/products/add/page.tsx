@@ -139,7 +139,10 @@ export default function ProductForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={String(field.value)}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a Product Category" />

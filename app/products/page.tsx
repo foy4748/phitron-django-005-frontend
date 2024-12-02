@@ -14,11 +14,15 @@ import { TSingleProduct } from "@/types/product";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/authOptions";
+import { SearchParams } from "next/dist/server/request/search-params";
+import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
 
 // Product Fetch Func
-export const getProductList = async () => {
+export const getProductList = async (queryStr?: string) => {
   const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
-  const res = await fetch(`${S}/product-list/`);
+  const res = await fetch(
+    `${S}/product-list/${queryStr ? `?${queryStr}` : ""}`
+  );
   const data: TSingleProduct[] = await res.json();
 
   return data;
@@ -27,12 +31,20 @@ export const getProductList = async () => {
 const repeat = (arr: TSingleProduct[], n: number) =>
   Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
 
-export default async function ProductCardGrid() {
-  const product_list = await getProductList();
+export default async function ProductCardGrid({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const strParams = JSON.stringify(searchParams);
+  const params = JSON.parse(strParams);
+  const queryStr = new URLSearchParams(params).toString();
+  const product_list = await getProductList(queryStr);
   const d = await getServerSession(authOptions);
   return (
     <>
       <p>{JSON.stringify(d)}</p>
+      <SearchAndFilterProduct />
       <GridSystem>
         {repeat(product_list, 9).map((p, idx) => {
           return (
