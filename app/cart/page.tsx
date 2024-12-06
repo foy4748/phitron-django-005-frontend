@@ -4,6 +4,7 @@ import { TCartItem } from "@/types/cart";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import UpdateCartItemQuantity from "./components/UpdateCartItemQuantity";
+import { DeleteCartItem } from "./components/DeleteCartItem";
 
 const getCartItems = async () => {
   const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
@@ -16,7 +17,7 @@ const getCartItems = async () => {
       "Content-Type": "application/json",
     },
     next: {
-      tags: ["cartItem"],
+      tags: ["cartItems"],
     },
   });
   const data = await res.json();
@@ -30,7 +31,7 @@ export default async function CartList() {
       <section>
         {data.map((d) => {
           return (
-            <GridSystem key={d.id}>
+            <GridSystem key={d.id} className="relative">
               <Col>
                 <figure>
                   <Image
@@ -60,6 +61,7 @@ export default async function CartList() {
               <Col className="flex items-center justify-center">
                 <UpdateCartItemQuantity cartItem={d} />
               </Col>
+              <DeleteCartItem id={d.id} className="absolute top-0 right-0" />
             </GridSystem>
           );
         })}

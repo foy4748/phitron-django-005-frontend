@@ -1,6 +1,7 @@
 "use server";
 
 import { TAddToCartPayload } from "@/types/cart";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const addToCart = async (payload: TAddToCartPayload) => {
@@ -17,6 +18,7 @@ export const addToCart = async (payload: TAddToCartPayload) => {
       body: JSON.stringify(payload),
     });
     const data = await res.json();
+    revalidateTag("cartItems");
     return data;
   } catch (error) {
     console.log(error);

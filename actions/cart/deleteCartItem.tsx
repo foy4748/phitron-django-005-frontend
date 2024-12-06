@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const deleteCartItem = async (id: number | `${number}`) => {
@@ -14,8 +15,9 @@ export const deleteCartItem = async (id: number | `${number}`) => {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.json();
-    return data;
+    // const data = await res.json();
+    revalidateTag("cartItems");
+    return true;
   } catch (error) {
     console.log(error);
     return {
