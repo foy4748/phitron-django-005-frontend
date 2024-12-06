@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import UpdateCartItemQuantity from "./components/UpdateCartItemQuantity";
 import { DeleteCartItem } from "./components/DeleteCartItem";
+import { PurchaseButton } from "./components/PurchaseButton";
 
 const getCartItems = async () => {
   const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
@@ -29,6 +30,7 @@ export default async function CartList() {
   return (
     <>
       <section>
+        <PurchaseButton />
         {data.map((d) => {
           return (
             <GridSystem key={d.id} className="relative">
