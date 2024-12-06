@@ -16,10 +16,10 @@ export default function Home() {
             <li>Products</li>
           </Link>
           <Link href="/cart">
-            <li>Products</li>
+            <li>Cart Items</li>
           </Link>
           <Link href="/purchase-history">
-            <li>Products</li>
+            <li>Purchase History</li>
           </Link>
         </ul>
       </nav>
