@@ -14,7 +14,7 @@ import { TSingleProduct } from "@/types/product";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/authOptions";
-import { SearchParams } from "next/dist/server/request/search-params";
+import { ReadonlyURLSearchParams } from "next/navigation";
 import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
 
 // Product Fetch Func
@@ -28,49 +28,55 @@ export const getProductList = async (queryStr?: string) => {
   return data;
 };
 
-const repeat = (arr: TSingleProduct[], n: number) =>
-  Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
+// const repeat = (arr: TSingleProduct[], n: number) =>
+//   Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
 
 export default async function ProductCardGrid({
   searchParams,
 }: {
-  searchParams: SearchParams;
+  searchParams: ReadonlyURLSearchParams;
 }) {
-  const strParams = JSON.stringify(searchParams);
+  const s = await searchParams;
+  const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
   const queryStr = new URLSearchParams(params).toString();
   const product_list = await getProductList(queryStr);
   const d = await getServerSession(authOptions);
+  // {repeat(product_list, 9).map((p, idx) => {
   return (
     <>
       <p>{JSON.stringify(d)}</p>
       <SearchAndFilterProduct />
       <GridSystem>
-        {repeat(product_list, 9).map((p, idx) => {
+        {product_list.map((p, idx) => {
           return (
             <Col key={idx}>
-              <Card>
-                <Image
-                  src={p.image_url}
-                  alt={`${p.product_name} by ${p.product_owner}`}
-                  width={300}
-                  height={300}
-                  className="w-full object-scale-down"
-                />
-                <CardHeader>
-                  <CardTitle>{p.product_name}</CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-4">
-                  <p className="text-xl font-semibold">
-                    $ {p.unit_price} / {p.unit_name}
-                  </p>
-                  <CardDescription>{p.description}</CardDescription>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Link href={`/products/${p.id}`}>
-                    <Button>Details</Button>
-                  </Link>
-                </CardFooter>
+              <Card className="h-full flex flex-col justify-between">
+                <figure className="h-full flex flex-col justify-center items-center">
+                  <Image
+                    src={p.image_url}
+                    alt={`${p.product_name} by ${p.product_owner}`}
+                    width={300}
+                    height={300}
+                    className="w-full object-scale-down"
+                  />
+                </figure>
+                <article>
+                  <CardHeader>
+                    <CardTitle>{p.product_name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-4">
+                    <p className="text-xl font-semibold">
+                      $ {p.unit_price} / {p.unit_name}
+                    </p>
+                    <CardDescription>{p.description}</CardDescription>
+                  </CardContent>
+                  <CardFooter className="flex justify-end">
+                    <Link href={`/products/${p.id}`}>
+                      <Button>Details</Button>
+                    </Link>
+                  </CardFooter>
+                </article>
               </Card>
             </Col>
           );

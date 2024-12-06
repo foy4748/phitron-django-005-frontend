@@ -12,6 +12,15 @@ export default function Home() {
           <Link href="/register">
             <li>Register</li>
           </Link>
+          <Link href="/products">
+            <li>Products</li>
+          </Link>
+          <Link href="/cart">
+            <li>Products</li>
+          </Link>
+          <Link href="/purchase-history">
+            <li>Products</li>
+          </Link>
         </ul>
       </nav>
     </section>
