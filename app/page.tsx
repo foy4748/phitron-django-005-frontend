@@ -21,6 +21,9 @@ export default function Home() {
           <Link href="/purchase-history">
             <li>Purchase History</li>
           </Link>
+          <Link href="/profile/deposite">
+            <li>Deposite</li>
+          </Link>
         </ul>
       </nav>
     </section>
