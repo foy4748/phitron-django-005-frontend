@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { TProductCategory } from "@/types/product";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
+import useCategory from "@/hooks/useCategory";
 
 const formSchema = z.object({
   search: z.string().optional(),
@@ -33,7 +34,7 @@ const formSchema = z.object({
 });
 
 export function SearchAndFilterProduct() {
-  const [categories, setCategories] = useState<TProductCategory[]>([]);
+  const { categories } = useCategory();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -47,27 +48,6 @@ export function SearchAndFilterProduct() {
       search: "",
     },
   });
-  useEffect(() => {
-    const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
-    fetch(`${S}/category-list/`)
-      .then((res) => res.json())
-      .then((d: TProductCategory[]) => {
-        setCategories(d);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast({
-          title: "You submitted the following values:",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-red-950 p-4">
-              <code className="text-white">
-                Failed to fetch product categories
-              </code>
-            </pre>
-          ),
-        });
-      });
-  }, []);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
