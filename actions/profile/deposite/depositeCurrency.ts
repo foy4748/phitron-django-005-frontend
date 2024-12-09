@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const depositeCurrency = async (payload: {
@@ -17,6 +18,7 @@ export const depositeCurrency = async (payload: {
       },
       body: JSON.stringify(payload),
     });
+    revalidateTag("balance");
     const data = await res.json();
     return data;
   } catch (error) {
