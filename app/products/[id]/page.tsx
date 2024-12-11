@@ -6,6 +6,8 @@ import Image from "next/image";
 import AddToCartButton from "./components/AddToCartButton";
 import ProductReviewList from "./components/ProductReviewList";
 import { AddOrUpdateProductReview } from "./components/AddOrUpdateProductReview";
+import { HeartIcon } from "lucide-react";
+import AddToWishList from "./components/AddToWishList";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -53,6 +55,7 @@ export default async function ProductDetails({ params }: Props) {
           <div className="flex gap-2">
             <AddToCartButton />
             <Button>Buy Now</Button>
+            <AddToWishList product={data.id} />
           </div>
         </Col>
         <Col className="md:col-span-12 lg:col-span-6">
