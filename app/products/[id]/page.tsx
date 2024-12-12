@@ -6,7 +6,6 @@ import Image from "next/image";
 import AddToCartButton from "./components/AddToCartButton";
 import ProductReviewList from "./components/ProductReviewList";
 import { AddOrUpdateProductReview } from "./components/AddOrUpdateProductReview";
-import { HeartIcon } from "lucide-react";
 import AddToWishList from "./components/AddToWishList";
 
 type Props = {

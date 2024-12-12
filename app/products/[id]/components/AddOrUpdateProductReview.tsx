@@ -17,7 +17,7 @@ import { toast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 // import { Ratings } from "@/components/customUI/GridSystem/Rating";
 import { Rating } from "@smastrom/react-rating";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { addProductReview } from "@/actions/review/addProductReview";
 import { useEffect } from "react";
 import { getSpecifcReview } from "@/actions/review/getSpecificReview";
@@ -43,6 +43,7 @@ type PropTypes = {
 
 export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
   const { id } = useParams();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -76,6 +77,8 @@ export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
       await updateSpecificReview(data, Number(review_id));
     } else {
       await addProductReview(data);
+      form.reset();
+      router.push(`/products/${id}`);
     }
   }
 
