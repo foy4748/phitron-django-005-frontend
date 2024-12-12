@@ -18,11 +18,17 @@ export default function Home() {
           <Link href="/cart">
             <li>Cart Items</li>
           </Link>
+          <Link href="/wish-list">
+            <li>Wish List</li>
+          </Link>
           <Link href="/purchase-history">
             <li>Purchase History</li>
           </Link>
           <Link href="/profile/deposite">
             <li>Deposite</li>
+          </Link>
+          <Link href="/profile/info">
+            <li>Balance</li>
           </Link>
         </ul>
       </nav>

@@ -26,6 +26,8 @@ export type TSingleProduct = {
   description: string;
   product_owner: number | TProductOwner;
   category: number | TProductCategory;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TProductPayload = {
