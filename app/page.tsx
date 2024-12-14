@@ -1,6 +1,10 @@
+import LogOut from "@/components/LogOut";
+import authOptions from "@/lib/authOptions";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const s = await getServerSession(authOptions);
   return (
     <section>
       <h1>Welcome</h1>
@@ -30,6 +34,7 @@ export default function Home() {
           <Link href="/profile/info">
             <li>Balance</li>
           </Link>
+          {s && <LogOut />}
         </ul>
       </nav>
     </section>
