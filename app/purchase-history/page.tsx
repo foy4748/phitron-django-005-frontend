@@ -34,9 +34,6 @@ export default async function PurchaseHistoryPage() {
                     <Link href={`/review/${d.product.id}`}>
                       <Button>Review Product</Button>
                     </Link>
-                    <Link href={`/review/edit/${d.product.id}`}>
-                      <Button>Edit Review</Button>
-                    </Link>
                     <Link href={`/products/${d.product.id}`}>
                       <Button>Product Page</Button>
                     </Link>

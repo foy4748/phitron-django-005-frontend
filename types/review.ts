@@ -4,6 +4,7 @@ export type TProductReview = {
   rating: `${number}` | number;
   product: `${number}` | number;
   reviewer: `${number}` | number;
+  created_at: string;
 };
 
 export type TProductReviewPayload = {

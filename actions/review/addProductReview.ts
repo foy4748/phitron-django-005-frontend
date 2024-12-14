@@ -1,6 +1,7 @@
 "use server";
 
 import { TProductReviewPayload } from "@/types/review";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const addProductReview = async (payload: TProductReviewPayload) => {
@@ -16,6 +17,7 @@ export const addProductReview = async (payload: TProductReviewPayload) => {
       },
       body: JSON.stringify(payload),
     });
+    revalidateTag("product-user-review-list");
     const data = await res.json();
     return data;
   } catch (error) {
