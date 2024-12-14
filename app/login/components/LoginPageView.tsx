@@ -50,7 +50,7 @@ export default function LoginPageView() {
         </pre>
       ),
     });
-    // await loginUser(data);
+    await loginUser(data);
     await signIn("credentials", data);
   }
 
