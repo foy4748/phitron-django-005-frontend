@@ -17,68 +17,48 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginUser } from "@/actions/auth/loginUser";
-import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { changePassword } from "@/actions/auth/changePassword";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  old_password: z.string().min(8, {
+    message: "Password must be at least 8 characters.",
   }),
-  password: z.string().min(8, {
+  new_password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
 });
 
-export default function LoginPageView() {
+export default function ChangePasswordView() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "test",
-      password: "TestTest$1",
+      old_password: "",
+      new_password: "",
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     // Toaster
     toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: "Password Changes submitted",
     });
-    await loginUser(data);
-    await signIn("credentials", data);
+    // await loginUser(data);
+    // await signIn("credentials", data);
+    await changePassword(data);
   }
 
   return (
     <section className="flex justify-center w-full">
       <div className="w-2/3">
         <Form {...form}>
-          <h1 className="text-3xl font-bold mb-8">Login Form</h1>
+          <h1 className="text-3xl font-bold mb-8">Password Change Form</h1>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="username"
+              name="old_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="foy4748" type={"text"} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Old Password</FormLabel>
                   <FormControl>
                     <Input type={"password"} {...field} />
                   </FormControl>
@@ -86,14 +66,19 @@ export default function LoginPageView() {
                 </FormItem>
               )}
             />
-
-            <p>
-              You don't have an account? Please,{" "}
-              <Link className="text-link" href="/register">
-                Register
-              </Link>{" "}
-              .
-            </p>
+            <FormField
+              control={form.control}
+              name="new_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New Password</FormLabel>
+                  <FormControl>
+                    <Input type={"password"} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <div className="flex">
               <Button className="flex-1" type="submit">

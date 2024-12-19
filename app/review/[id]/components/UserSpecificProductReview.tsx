@@ -23,35 +23,36 @@ export default async function UserSpecificProductReview({
   return (
     <>
       <GridSystem>
-        {data?.map((d) => {
-          return (
-            <Col key={d.id} className="flex justify-center items-center">
-              <div>
-                <Dialog>
-                  <DialogTitle>
-                    <PenSquareIcon className="hidden" />
-                  </DialogTitle>
-                  <DialogDescription>
-                    <p>{d.review_text}</p>
-                    <Rating
-                      readOnly
-                      value={Number(String(d.rating))}
-                      style={{ maxWidth: 200 }}
-                    />
-                    <p>{moment(d.created_at).fromNow()}</p>
-                    <DialogTrigger className="mt-2 w-full flex justify-end items-center">
-                      <PenSquareIcon />
-                      {"  "} | Update Review
-                    </DialogTrigger>
-                  </DialogDescription>
-                  <DialogContent>
-                    <AddOrUpdateProductReview editMode review_id={d.id} />
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </Col>
-          );
-        })}
+        {Array.isArray(data) &&
+          data?.map((d) => {
+            return (
+              <Col key={d.id} className="flex justify-center items-center">
+                <div>
+                  <Dialog>
+                    <DialogTitle>
+                      <PenSquareIcon className="hidden" />
+                    </DialogTitle>
+                    <DialogDescription>
+                      <p>{d.review_text}</p>
+                      <Rating
+                        readOnly
+                        value={Number(String(d.rating))}
+                        style={{ maxWidth: 200 }}
+                      />
+                      <p>{moment(d.created_at).fromNow()}</p>
+                      <DialogTrigger className="mt-2 w-full flex justify-end items-center">
+                        <PenSquareIcon />
+                        {"  "} | Update Review
+                      </DialogTrigger>
+                    </DialogDescription>
+                    <DialogContent>
+                      <AddOrUpdateProductReview editMode review_id={d.id} />
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </Col>
+            );
+          })}
       </GridSystem>
     </>
   );

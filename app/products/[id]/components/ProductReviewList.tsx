@@ -19,14 +19,15 @@ export default async function ProductReviewList({ id }: PropType) {
   const data = await getProductReviewList(id);
   return (
     <>
-      {data?.map((r) => {
-        return (
-          <div key={r?.id} className="flex">
-            <p>{r?.review_text}</p>
-            <DeleteReviewButton id={Number(r?.id)} reviewer={r?.reviewer} />
-          </div>
-        );
-      })}
+      {Array.isArray(data) &&
+        data?.map((r) => {
+          return (
+            <div key={r?.id} className="flex">
+              <p>{r?.review_text}</p>
+              <DeleteReviewButton id={Number(r?.id)} reviewer={r?.reviewer} />
+            </div>
+          );
+        })}
     </>
   );
 }

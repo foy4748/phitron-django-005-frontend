@@ -206,13 +206,14 @@ export default function AddOrUpdateProduct({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {categories?.map(({ id, category }) => {
-                    return (
-                      <SelectItem key={id} value={String(Number(id))}>
-                        {category}
-                      </SelectItem>
-                    );
-                  })}
+                  {Array.isArray(categories) &&
+                    categories?.map(({ id, category }) => {
+                      return (
+                        <SelectItem key={id} value={String(Number(id))}>
+                          {category}
+                        </SelectItem>
+                      );
+                    })}
                 </SelectContent>
               </Select>
               <FormMessage />
