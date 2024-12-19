@@ -13,6 +13,7 @@ import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import moment from "moment";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import DeleteProductReview from "./DeleteProductReview";
 
 export default async function UserSpecificProductReview({
   product_id,
@@ -32,19 +33,25 @@ export default async function UserSpecificProductReview({
                     <DialogTitle>
                       <PenSquareIcon className="hidden" />
                     </DialogTitle>
-                    <DialogDescription>
-                      <p>{d.review_text}</p>
+                    <DialogDescription className="my-2">
+                      {d.review_text}
+                    </DialogDescription>
+                    <div className="space-y-2">
                       <Rating
                         readOnly
                         value={Number(String(d.rating))}
                         style={{ maxWidth: 200 }}
                       />
-                      <p>{moment(d.created_at).fromNow()}</p>
-                      <DialogTrigger className="mt-2 w-full flex justify-end items-center">
-                        <PenSquareIcon />
-                        {"  "} | Update Review
-                      </DialogTrigger>
-                    </DialogDescription>
+                      <p className="text-right">
+                        {moment(d.created_at).fromNow()}
+                      </p>
+                      <div className="flex items-center mt-2">
+                        <DeleteProductReview review_id={d.id} />
+                        <DialogTrigger className=" w-1/2 flex items-center hover:text-green-500">
+                          <PenSquareIcon className="me-2" />| Update
+                        </DialogTrigger>
+                      </div>
+                    </div>
                     <DialogContent>
                       <AddOrUpdateProductReview editMode review_id={d.id} />
                     </DialogContent>
