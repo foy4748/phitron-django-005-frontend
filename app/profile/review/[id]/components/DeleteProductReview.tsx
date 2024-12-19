@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 export default function DeleteProductReview({
   review_id,
@@ -48,7 +49,10 @@ export default function DeleteProductReview({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleReviewDelete(review_id)}>
+          <AlertDialogAction
+            className="bg-red-500 hover:bg-red-700"
+            onClick={() => handleReviewDelete(review_id)}
+          >
             Confirm
           </AlertDialogAction>
         </AlertDialogFooter>
