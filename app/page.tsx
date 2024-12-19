@@ -37,6 +37,9 @@ export default async function Home() {
           <Link href="/profile/change-password">
             <li>Change Password</li>
           </Link>
+          <Link href="/reset-password">
+            <li>Reset Password</li>
+          </Link>
           {s && <LogOut />}
         </ul>
       </nav>
