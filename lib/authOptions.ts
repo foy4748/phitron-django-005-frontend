@@ -49,20 +49,28 @@ const authOptions: AuthOptions = {
       // Add additional fields to the token
       if (user) {
         token.user_id = String(user?.user_id);
-        token.image_url = String(user?.image_url);
-        token.first_name = String(user?.first_name);
-        token.last_name = String(user?.last_name);
-        token.phone_no = String(user?.phone_no);
+        token.image_url = user?.image_url ? String(user?.image_url) : "";
+        token.first_name = user?.first_name ? String(user?.first_name) : "";
+        token.last_name = user?.last_name ? String(user?.last_name) : "";
+        token.phone_no = user?.phone_no ? String(user?.phone_no) : "";
+        token.isAdmin = Boolean(user?.isAdmin);
       }
       return token;
     },
     session: async ({ session, token }: { session: Session; token: JWT }) => {
       // Add additional fields to the session object
       session.user.user_id = String(token?.user_id);
-      session.user.image_url = String(token?.image_url);
-      session.user.first_name = String(token?.first_name);
-      session.user.last_name = String(token?.last_name);
-      session.user.phone_no = String(token?.phone_no);
+      session.user.image_url = token?.image_url
+        ? String(token?.image_url)
+        : null;
+      session.user.first_name = token?.first_name
+        ? String(token?.first_name)
+        : null;
+      session.user.last_name = token?.last_name
+        ? String(token?.last_name)
+        : null;
+      session.user.phone_no = token?.phone_no ? String(token?.phone_no) : null;
+      session.user.isAdmin = Boolean(token?.isAdmin);
       return session;
     },
   },

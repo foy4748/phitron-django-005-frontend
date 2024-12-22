@@ -10,23 +10,14 @@ import {
 import Image from "next/image";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
-import { TSingleProduct } from "@/types/product";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import authOptions from "@/lib/authOptions";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
+import { getProductList } from "@/actions/product/getProductList";
 
 // Product Fetch Func
-export const getProductList = async (queryStr?: string) => {
-  const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
-  const res = await fetch(
-    `${S}/product-list/${queryStr ? `?${queryStr}` : ""}`
-  );
-  const data: TSingleProduct[] = await res.json();
-
-  return data;
-};
 
 // const repeat = (arr: TSingleProduct[], n: number) =>
 //   Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
