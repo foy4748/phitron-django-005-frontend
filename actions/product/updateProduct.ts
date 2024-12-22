@@ -6,13 +6,15 @@ import { cookies } from "next/headers";
 
 export const updateProduct = async (
   payload: TProductPayload,
-  id: number | `${number}`
+  id: number | `${number}`,
   isAdminOnly?: boolean
 ) => {
   try {
     const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
     const ck = await cookies();
-	const url = isAdminOnly ? `${S}/admin-specific/product-update/${id}/`:`${S}/product-update/${id}/`
+    const url = isAdminOnly
+      ? `${S}/admin-specific/product-update/${id}/`
+      : `${S}/product-update/${id}/`;
     const res = await fetch(url, {
       credentials: "include",
       method: "PATCH",

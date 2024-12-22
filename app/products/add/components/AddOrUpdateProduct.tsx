@@ -28,8 +28,8 @@ import { updateProduct } from "@/actions/product/updateProduct";
 import { toast } from "@/hooks/use-toast";
 import useCategory from "@/hooks/useCategory";
 import { getSpecifcProduct } from "@/actions/product/getSpecificProduct";
-import { useEffect } from "react";
-import { deleteProduct } from "@/actions/product/deleteSpecificProduct";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import DeleteProductButton from "../../[id]/components/DeleteProductButton";
 
 const formSchema = z.object({
   product_name: z.string(),
@@ -41,12 +41,16 @@ const formSchema = z.object({
 });
 type PropTypes = {
   editMode?: boolean | undefined;
+  isAdminOnly?: boolean | undefined;
   product_id?: number | `${number}`;
+  setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function AddOrUpdateProduct({
   editMode,
+  isAdminOnly,
   product_id,
+  setIsDialogOpen,
 }: PropTypes) {
   const { categories } = useCategory();
   // 1. Define your form.
@@ -81,31 +85,6 @@ export default function AddOrUpdateProduct({
     }
   }, [editMode, product_id, form]);
 
-  const handleDelete = async (id: number | `${number}`) => {
-    try {
-      await deleteProduct(Number(String(id)));
-      // Toaster
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Deleted Product Successfully</code>
-          </pre>
-        ),
-      });
-    } catch (error) {
-      console.log(error);
-      // Toaster
-      toast({
-        title: "You submitted the following values:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">FAILED to Deleted Product</code>
-          </pre>
-        ),
-      });
-    }
-  };
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -113,6 +92,7 @@ export default function AddOrUpdateProduct({
     if (!editMode) {
       try {
         await addProduct(values);
+        if (setIsDialogOpen) setIsDialogOpen(false);
         // Toaster
         toast({
           title: "You submitted the following values:",
@@ -136,7 +116,8 @@ export default function AddOrUpdateProduct({
       }
     } else {
       try {
-        await updateProduct(values, Number(String(product_id)));
+        await updateProduct(values, Number(String(product_id)), isAdminOnly);
+        if (setIsDialogOpen) setIsDialogOpen(false);
         // Toaster
         toast({
           title: "You submitted the following values:",
@@ -261,9 +242,11 @@ export default function AddOrUpdateProduct({
         />
         <Button type="submit">Submit</Button>
         {editMode && (
-          <Button type="button" variant={"destructive"} onClick={handleDelete}>
-            Delete Product
-          </Button>
+          <DeleteProductButton
+            product_id={Number(String(product_id))}
+            isAdminOnly={isAdminOnly}
+            setIsDialogOpen={setIsDialogOpen}
+          />
         )}
       </form>
     </Form>

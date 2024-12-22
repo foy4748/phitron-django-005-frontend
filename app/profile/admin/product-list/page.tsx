@@ -1,13 +1,12 @@
 import { getProductList } from "@/actions/product/getProductList";
+import AdminProductListView from "./components/ProductTable";
+import { columns } from "./components/ProductColumns";
 
-export default async function AdminProductList() {
+export default async function AdminProductListPage() {
   const data = await getProductList(undefined, true);
   return (
     <>
-      <h1>AdminProductList</h1>
-      {data?.map((d) => {
-        return <p key={d.id}>{JSON.stringify(d)}</p>;
-      })}
+      <AdminProductListView columns={columns} data={data} />
     </>
   );
 }
