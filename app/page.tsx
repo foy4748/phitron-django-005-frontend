@@ -25,7 +25,7 @@ export default async function Home() {
           <Link href="/wish-list">
             <li>Wish List</li>
           </Link>
-          <Link href="/purchase-history">
+          <Link href="/profile/purchase-history">
             <li>Purchase History</li>
           </Link>
           <Link href="/profile/deposite">

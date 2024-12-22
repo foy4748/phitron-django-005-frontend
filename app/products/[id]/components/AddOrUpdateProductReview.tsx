@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Rating } from "@smastrom/react-rating";
 import { useParams, useRouter } from "next/navigation";
 import { addProductReview } from "@/actions/review/addProductReview";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { getSpecifcReview } from "@/actions/review/getSpecificReview";
 import { updateSpecificReview } from "@/actions/review/updateSpecificReview";
 
@@ -39,9 +39,14 @@ const FormSchema = z.object({
 type PropTypes = {
   editMode?: boolean | undefined;
   review_id?: number | `${number}`;
+  setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
-export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
+export function AddOrUpdateProductReview({
+  editMode,
+  review_id,
+  setIsDialogOpen,
+}: PropTypes) {
   const { id } = useParams();
   const router = useRouter();
 
@@ -65,20 +70,29 @@ export function AddOrUpdateProductReview({ editMode, review_id }: PropTypes) {
   }, [editMode, review_id, form]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-    if (editMode) {
-      await updateSpecificReview(data, Number(review_id));
-    } else {
-      await addProductReview(data);
-      form.reset();
-      router.push(`/products/${id}`);
+    try {
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+      if (editMode) {
+        await updateSpecificReview(data, Number(review_id));
+        if (setIsDialogOpen) setIsDialogOpen(false);
+      } else {
+        await addProductReview(data);
+        if (setIsDialogOpen) setIsDialogOpen(false);
+        form.reset();
+        router.push(`/products/${id}`);
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Something Went Wrong",
+      });
     }
   }
 
