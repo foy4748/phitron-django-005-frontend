@@ -49,6 +49,7 @@ const authOptions: AuthOptions = {
       // Add additional fields to the token
       if (user) {
         token.user_id = String(user?.user_id);
+        token.username = user?.username ? String(user?.username) : "";
         token.image_url = user?.image_url ? String(user?.image_url) : "";
         token.first_name = user?.first_name ? String(user?.first_name) : "";
         token.last_name = user?.last_name ? String(user?.last_name) : "";
@@ -60,6 +61,7 @@ const authOptions: AuthOptions = {
     session: async ({ session, token }: { session: Session; token: JWT }) => {
       // Add additional fields to the session object
       session.user.user_id = String(token?.user_id);
+      session.user.username = String(token?.username);
       session.user.image_url = token?.image_url
         ? String(token?.image_url)
         : null;

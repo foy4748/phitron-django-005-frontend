@@ -19,24 +19,10 @@ export default async function Home() {
           <Link href="/products">
             <li>Products</li>
           </Link>
-          <Link href="/cart">
-            <li>Cart Items</li>
+          <Link href="/dashboard">
+            <li>Dashboard</li>
           </Link>
-          <Link href="/wish-list">
-            <li>Wish List</li>
-          </Link>
-          <Link href="/profile/purchase-history">
-            <li>Purchase History</li>
-          </Link>
-          <Link href="/profile/deposite">
-            <li>Deposite</li>
-          </Link>
-          <Link href="/profile/info">
-            <li>Balance</li>
-          </Link>
-          <Link href="/profile/change-password">
-            <li>Change Password</li>
-          </Link>
+
           <Link href="/reset-password">
             <li>Reset Password</li>
           </Link>
