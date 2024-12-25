@@ -21,6 +21,7 @@ import { loginUser } from "@/actions/auth/loginUser";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const FormSchema = z.object({
   username: z.string().min(2, {
@@ -32,7 +33,7 @@ const FormSchema = z.object({
 });
 
 export default function LoginPageView() {
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -43,7 +44,7 @@ export default function LoginPageView() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    setLoading(true);
     // Toaster
     toast({
       title: "You submitted the following values:",
@@ -54,8 +55,30 @@ export default function LoginPageView() {
       ),
     });
     const callbackUrl = pathname.includes("login") ? "/" : pathname;
-    await loginUser(data);
-    await signIn("credentials", { ...data, callbackUrl });
+    try {
+      const d = await loginUser(data);
+      if (d.success) {
+        toast({
+          title: "Logged In Successful. Redirecting",
+        });
+        await signIn("credentials", { ...data, callbackUrl });
+        setLoading(false);
+      } else {
+        toast({
+          title: "Authentication failed",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{d.error}</code>
+            </pre>
+          ),
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Failed to login",
+      });
+    }
   }
 
   return (

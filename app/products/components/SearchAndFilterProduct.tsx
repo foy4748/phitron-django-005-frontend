@@ -1,8 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -20,11 +19,44 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { TProductCategory } from "@/types/product";
 import { toast } from "@/hooks/use-toast";
-import { Input } from "@/components/ui/input";
 import useCategory from "@/hooks/useCategory";
+
+/* Dialog Related */
+
+import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import useQueryParams from "@/hooks/useQueryParams";
+
+/* ---  END OF Dialog Related */
 
 const formSchema = z.object({
   search: z.string().optional(),
@@ -33,21 +65,40 @@ const formSchema = z.object({
   unit_price__lt: z.coerce.string().optional(),
 });
 
-export function SearchAndFilterProduct() {
+interface FormValues {
+  category: string;
+  search: string;
+  unit_price__lt: string;
+  unit_price__gte: string;
+}
+
+type PropTypes = {
+  setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
+};
+
+export function SearchAndFilterProductForm({ setIsDialogOpen }: PropTypes) {
   const { categories } = useCategory();
+  const queryParams = useQueryParams();
 
   const router = useRouter();
   const pathname = usePathname();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      category: undefined,
-      unit_price__gte: "",
-      unit_price__lt: "",
-      search: "",
-    },
+    // defaultValues: {
+    //   category: undefined,
+    //   unit_price__gte: "",
+    //   unit_price__lt: "",
+    //   search: "",
+    // },
+    defaultValues: queryParams,
   });
+
+  useEffect(() => {
+    Object.keys(queryParams).forEach((key) => {
+      form.setValue(key as keyof FormValues, queryParams[key]);
+    });
+  }, [form, queryParams]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -64,8 +115,8 @@ export function SearchAndFilterProduct() {
       const queryStr = new URLSearchParams(
         filteredValues as Record<string, string>
       ).toString();
-      console.log(queryStr);
       router.push(`${pathname}${queryStr ? `?${queryStr}` : ""}`);
+      if (setIsDialogOpen) setIsDialogOpen(false);
       // toast({
       //   title: "You submitted the following values:",
       //   description: (
@@ -161,11 +212,75 @@ export function SearchAndFilterProduct() {
             )}
           />
           <Button type="submit">Submit</Button>
-          <Button type="button" onClick={() => form.reset()}>
+          <Button
+            type="button"
+            onClick={() => {
+              router.push(pathname);
+              if (setIsDialogOpen) setIsDialogOpen(false);
+            }}
+          >
             Reset
           </Button>
         </form>
       </Form>
     </>
+  );
+}
+
+export function SearchAndFilterProduct() {
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline">Edit Profile</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription></DialogDescription>
+          </DialogHeader>
+          <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="outline">Edit Profile</Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerDescription></DrawerDescription>
+        </DrawerHeader>
+        <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
+function ProfileForm({ className }: React.ComponentProps<"form">) {
+  return (
+    <form className={cn("grid items-start gap-4", className)}>
+      <div className="grid gap-2">
+        <Label htmlFor="email">Email</Label>
+        <Input type="email" id="email" defaultValue="shadcn@example.com" />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="username">Username</Label>
+        <Input id="username" defaultValue="@shadcn" />
+      </div>
+      <Button type="submit">Save changes</Button>
+    </form>
   );
 }

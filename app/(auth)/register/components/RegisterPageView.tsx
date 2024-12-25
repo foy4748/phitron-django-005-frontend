@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { uploadPhoto } from "@/actions/uploadPhoto";
 import { registerUser } from "@/actions/auth/registerUser";
+import { useRouter } from "next/navigation";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_IMAGE_TYPES = [
@@ -55,6 +56,7 @@ const FormSchema = z.object({
 });
 
 export default function RegisterPageView() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -83,16 +85,23 @@ export default function RegisterPageView() {
     console.log(image_url);
     data["image_url"] = String(image_url);
     const d = await registerUser(data);
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-    console.log("BEFORE POST", data);
-    console.log("AFTER POST", d);
+    if (d.success) {
+      router.push("/");
+      toast({
+        title: "Account Creation was successful",
+        description: `Now check your email ${data.email} to activate your account`,
+      });
+      form.reset();
+    } else {
+      toast({
+        title: "Something went wrong",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(d)}</code>
+          </pre>
+        ),
+      });
+    }
   }
 
   return (

@@ -19,6 +19,5 @@ export const getProductList = async (
     },
   });
   const data: TSingleProduct[] = await res.json();
-  console.log(url, data);
   return data;
 };
