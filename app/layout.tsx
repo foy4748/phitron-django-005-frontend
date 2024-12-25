@@ -4,6 +4,7 @@ import "./globals.css";
 import "@smastrom/react-rating/style.css";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthSessionProvider from "@/lib/Providers/NextAuthSessionProvider";
+import NavBar from "@/components/customUI/NavBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextAuthSessionProvider>
+          <NavBar />
           {children}
           <Toaster />
         </NextAuthSessionProvider>

@@ -10,9 +10,11 @@ export const getProductList = async (
     ? `${S}/admin-specific/product-list`
     : `${S}/product-list`;
 
+  // Very Useful
+  // https://stackoverflow.com/questions/11704267/in-javascript-how-to-conditionally-add-a-member-to-an-object
   const res = await fetch(`${url}/${queryStr ? `?${queryStr}` : ""}`, {
     headers: {
-      Authorization: `Token ${ck.get("token")?.value}`,
+      ...(isAdminOnly && { Authorization: `Token ${ck.get("token")?.value}` }),
       "Content-Type": "application/json",
     },
   });
