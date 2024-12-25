@@ -235,11 +235,11 @@ export function SearchAndFilterProduct() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
+          <Button variant="outline">Search</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Search and Filter</DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
           <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
@@ -251,11 +251,11 @@ export function SearchAndFilterProduct() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Search</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
+          <DrawerTitle>Search and Filter</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
