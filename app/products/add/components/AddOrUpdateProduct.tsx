@@ -30,15 +30,16 @@ import useCategory from "@/hooks/useCategory";
 import { getSpecifcProduct } from "@/actions/product/getSpecificProduct";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import DeleteProductButton from "../../[id]/components/DeleteProductButton";
+import { uploadPhoto } from "@/actions/uploadPhoto";
 
-const formSchema = z.object({
-  product_name: z.string(),
-  image_url: z.string(),
-  unit_price: z.coerce.number(),
-  unit_name: z.string(),
-  category: z.coerce.number(),
-  description: z.string(),
-});
+const MAX_FILE_SIZE = 0.9 * 1024 * 1024; // 900 KB
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+
 type PropTypes = {
   editMode?: boolean | undefined;
   isAdminOnly?: boolean | undefined;
@@ -52,18 +53,39 @@ export default function AddOrUpdateProduct({
   product_id,
   setIsDialogOpen,
 }: PropTypes) {
+  const imageSchema = z
+    .instanceof(File, { message: "Please select an image file." })
+    .refine((file) => file.size <= MAX_FILE_SIZE, {
+      message: `The image is too large. Please choose an image smaller than ${
+        MAX_FILE_SIZE / (1024 * 1024)
+      }MB.`,
+    })
+    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+      message: "Please upload a valid image file (JPEG, PNG, or WebP).",
+    });
+  const formSchema = z.object({
+    product_name: z.string(),
+    image: editMode ? imageSchema.optional() : imageSchema,
+    image_url: z.string(),
+    unit_price: z.coerce.number(),
+    unit_name: z.string(),
+    category: z.coerce.number(),
+    description: z.string(),
+  });
   const { categories } = useCategory();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       product_name: "",
+      image: undefined,
       image_url: "",
       category: 0,
       unit_price: 1,
       unit_name: "",
       description: "",
     },
+    mode: "all",
   });
 
   useEffect(() => {
@@ -89,6 +111,19 @@ export default function AddOrUpdateProduct({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    const photoFile = new FormData();
+    const file = values["image"];
+    if (file) {
+      photoFile.append("image", file);
+      console.log("FROM FILE", file, photoFile);
+      let image_url = await uploadPhoto(photoFile);
+      if (!image_url)
+        image_url = "https://i.ibb.co.com/Nnt2N26/user-placeholder.png";
+      // Toaster
+      console.log(image_url);
+      values["image_url"] = String(image_url);
+    }
+    console.log(values);
     if (!editMode) {
       try {
         await addProduct(values);
@@ -116,6 +151,7 @@ export default function AddOrUpdateProduct({
       }
     } else {
       try {
+        console.log(values);
         await updateProduct(values, Number(String(product_id)), isAdminOnly);
         if (setIsDialogOpen) setIsDialogOpen(false);
         // Toaster
@@ -144,6 +180,7 @@ export default function AddOrUpdateProduct({
 
   return (
     <Form {...form}>
+      {JSON.stringify(form.formState.errors)}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
@@ -160,6 +197,28 @@ export default function AddOrUpdateProduct({
         />
         <FormField
           control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Product Picture</FormLabel>
+              <FormControl>
+                <Input
+                  type={"file"}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      field.onChange(file);
+                    }
+                  }}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/*
+        <FormField
+          control={form.control}
           name="image_url"
           render={({ field }) => (
             <FormItem>
@@ -171,6 +230,7 @@ export default function AddOrUpdateProduct({
             </FormItem>
           )}
         />
+		*/}
         <FormField
           control={form.control}
           name="category"

@@ -27,7 +27,7 @@ export default async function ProductCardGrid({
 }: {
   searchParams: ReadonlyURLSearchParams;
 }) {
-  const s = searchParams;
+  const s = await searchParams;
   const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
   const queryStr = new URLSearchParams(params).toString();

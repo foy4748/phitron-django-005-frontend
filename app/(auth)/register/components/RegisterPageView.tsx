@@ -22,7 +22,7 @@ import { uploadPhoto } from "@/actions/uploadPhoto";
 import { registerUser } from "@/actions/auth/registerUser";
 import { useRouter } from "next/navigation";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 0.9 * 1024 * 1024; // 900 KB
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -50,7 +50,8 @@ const FormSchema = z.object({
     })
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
       message: "Please upload a valid image file (JPEG, PNG, or WebP).",
-    }),
+    })
+    .optional(),
   image_url: z.string(),
   phone_no: z.string().min(11).max(11),
 });
