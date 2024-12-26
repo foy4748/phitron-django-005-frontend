@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
-import { toast } from "@/hooks/use-toast";
 import { TProductCategory } from "@/types/product";
+import { getProductCategoryList } from "@/actions/category/getProductCategories";
 
 const useCategory = () => {
   const [categories, setCategories] = useState<TProductCategory[]>([]);
+  const [mappedCategories, setMappedCategories] = useState<{
+    [key: number | `${number}`]: string;
+  }>({});
   useEffect(() => {
-    const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
-    fetch(`${S}/category-list/`)
-      .then((res) => res.json())
-      .then((d: TProductCategory[]) => {
-        setCategories(d);
+    getProductCategoryList()
+      .then(({ categoryList, mappedCategory }) => {
+        setCategories(categoryList);
+        setMappedCategories(mappedCategory);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  return { categories, setCategories };
+  return { categories, setCategories, mappedCategories, setMappedCategories };
 };
 
 export default useCategory;

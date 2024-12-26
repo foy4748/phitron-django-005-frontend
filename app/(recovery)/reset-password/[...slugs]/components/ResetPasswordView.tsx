@@ -17,13 +17,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { resetPassword } from "@/actions/auth/resetPassword";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   new_password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-  uid64: z.string().optional(),
-  token: z.string().optional(),
+  uid64: z.string(),
+  token: z.string(),
 });
 
 type PropTypes = {
@@ -32,10 +33,13 @@ type PropTypes = {
 };
 
 export default function ResetPasswordView({ uid64, token }: PropTypes) {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       new_password: "",
+      uid64,
+      token,
     },
   });
 
@@ -46,7 +50,19 @@ export default function ResetPasswordView({ uid64, token }: PropTypes) {
     });
     data["uid64"] = uid64;
     data["token"] = token;
-    await resetPassword(data);
+    try {
+      const d = await resetPassword(data);
+
+      if (d.success) {
+        toast({ title: "Password Reset Successful" });
+        router.push("/login");
+      } else {
+        toast({ title: "Password Reset FAILED" });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({ title: "Password Reset FAILED" });
+    }
   }
 
   return (

@@ -15,6 +15,8 @@ export type TProductOwner = {
 export type TProductCategory = {
   id: number | `${number}`;
   category: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type TSingleProduct = {
@@ -25,7 +27,7 @@ export type TSingleProduct = {
   unit_name: string;
   description: string;
   product_owner: number | TProductOwner;
-  category: number | TProductCategory;
+  category: TProductCategory;
   created_at: string;
   updated_at: string;
 };

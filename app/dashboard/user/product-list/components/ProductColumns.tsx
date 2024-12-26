@@ -3,7 +3,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TSingleProduct } from "@/types/product";
 import Image from "next/image";
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 import { ProductUpdateModal } from "./ProductUpdateModal";
 import DeleteProductButton from "@/app/products/[id]/components/DeleteProductButton";
 export const columns: ColumnDef<TSingleProduct>[] = [
@@ -37,7 +36,7 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     accessorKey: "category",
     header: "Category",
     cell: ({ row }) => {
-      const { category } = row.original;
+      const { category } = row.original.category;
       return <>{category}</>;
     },
   },
