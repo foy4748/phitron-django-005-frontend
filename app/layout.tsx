@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+// Main CSS
 import "./globals.css";
 import "@smastrom/react-rating/style.css";
 import { Toaster } from "@/components/ui/toaster";

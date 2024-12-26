@@ -2,6 +2,7 @@ import LogOut from "@/components/LogOut";
 import authOptions from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
+import FeaturedProducts from "./home/components/FeaturedProducts";
 
 export default async function Home() {
   const s = await getServerSession(authOptions);
@@ -29,6 +30,7 @@ export default async function Home() {
           {s && <LogOut />}
         </ul>
       </nav>
+      <FeaturedProducts />
     </section>
   );
 }

@@ -77,7 +77,7 @@ export default function RegisterPageView() {
     console.log(data);
     const photoFile = new FormData();
     const file = data["image"];
-    photoFile.append("image", file);
+    photoFile.append("image", file as string | Blob);
     console.log("FROM FILE", file, photoFile);
     let image_url = await uploadPhoto(photoFile);
     if (!image_url)

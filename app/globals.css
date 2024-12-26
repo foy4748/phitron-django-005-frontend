@@ -86,3 +86,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* SwiperJS Related */
+.swiper-slide {
+  height: auto;
+}
