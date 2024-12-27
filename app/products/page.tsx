@@ -6,6 +6,7 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
 import { getProductList } from "@/actions/product/getProductList";
 import ProductCard from "./components/ProductCard";
+import CategoryTitle from "./components/CategoryTitle";
 
 // Product Fetch Func
 
@@ -27,6 +28,9 @@ export default async function ProductCardGrid({
     <>
       <p>{JSON.stringify(d)}</p>
       <SearchAndFilterProduct />
+      <h1 className="my-4">
+        <CategoryTitle className="text-4xl" />
+      </h1>
       <GridSystem>
         {Array.isArray(product_list) &&
           product_list.map((p, idx) => {

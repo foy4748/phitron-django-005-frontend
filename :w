@@ -1,0 +1,60 @@
+"use client";
+import useCategory from "@/hooks/useCategory";
+// import Swiper core and required modules
+import {
+  Navigation,
+  Scrollbar,
+  A11y,
+  Autoplay,
+  FreeMode,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+const CategoryList = () => {
+  const { categories } = useCategory();
+  return (
+    <>
+      <Swiper
+        // install Swiper modules
+        modules={[Scrollbar, Navigation, A11y, Autoplay, FreeMode]}
+        speed={5000}
+        spaceBetween={25}
+        autoplay={{
+          delay: 10,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        watchSlidesProgress
+        freeMode={{ enabled: true, sticky: false }}
+        breakpoints={{
+          640: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 6,
+          },
+          1280: {
+            slidesPerView: 10,
+          },
+          1536: {
+            slidesPerView: 12,
+          },
+          1854: {
+            slidesPerView: 14,
+          },
+        }}
+        pagination={{ clickable: true }}
+        loop
+        className="h-auto flex items-center"
+      >
+        {categories.map((c) => (
+          <SwiperSlide key={c.id}>
+            <p className="text-center bg-green-500">{c.category}</p>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </>
+  );
+};
+
+export default CategoryList;

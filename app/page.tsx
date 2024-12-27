@@ -4,13 +4,16 @@ import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import FeaturedProducts from "./home/components/FeaturedProducts";
 import Banner from "./home/components/Banner";
+import CategoryList from "./home/components/CategoryList";
 
 export default async function Home() {
   const s = await getServerSession(authOptions);
   return (
     <section>
       <Banner />
-      <h1>Welcome</h1>
+      <CategoryList />
+
+      <FeaturedProducts />
       <nav>
         <ul>
           <Link href="/login">
@@ -32,7 +35,6 @@ export default async function Home() {
           {s && <LogOut />}
         </ul>
       </nav>
-      <FeaturedProducts />
     </section>
   );
 }
