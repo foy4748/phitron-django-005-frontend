@@ -25,7 +25,7 @@ export default function ProductCard({ data }: { data: TSingleProduct }) {
             className="w-full h-full object-scale-down"
           />
         </figure>
-        <article>
+        <article className="h-full">
           <CardHeader>
             <div className="flex items-center space-x-3">
               <CardTitle>{data.product_name} </CardTitle>
@@ -34,17 +34,17 @@ export default function ProductCard({ data }: { data: TSingleProduct }) {
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className="h-full grid gap-4">
+          <CardContent className="h-full flex flex-col justify-between gap-y-4">
             <p className="text-xl font-semibold">
               $ {data.unit_price} / {data.unit_name}
             </p>
             <CardDescription>{data.description}</CardDescription>
+            <CardFooter className="cardFooter p-0 pb-8 mb-8 flex justify-end">
+              <Link href={`/products/${data.id}`}>
+                <Button>Details</Button>
+              </Link>
+            </CardFooter>
           </CardContent>
-          <CardFooter className="flex justify-end">
-            <Link href={`/products/${data.id}`}>
-              <Button>Details</Button>
-            </Link>
-          </CardFooter>
         </article>
       </Card>
     </>

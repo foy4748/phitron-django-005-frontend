@@ -3,11 +3,13 @@ import authOptions from "@/lib/authOptions";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import FeaturedProducts from "./home/components/FeaturedProducts";
+import Banner from "./home/components/Banner";
 
 export default async function Home() {
   const s = await getServerSession(authOptions);
   return (
     <section>
+      <Banner />
       <h1>Welcome</h1>
       <nav>
         <ul>

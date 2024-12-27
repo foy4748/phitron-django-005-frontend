@@ -5,11 +5,10 @@ import ProductCard from "@/app/products/components/ProductCard";
 // import Swiper core and required modules
 import {
   Navigation,
-  Pagination,
   Scrollbar,
   A11y,
-  FreeMode,
   Autoplay,
+  FreeMode,
 } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -29,12 +28,34 @@ export default function FeaturedProducts() {
       <h2 className="text-2xl font-bold my-8">Featured Products</h2>
       <Swiper
         // install Swiper modules
-        modules={[Navigation, Scrollbar, A11y, Autoplay, Pagination]}
+        modules={[Navigation, Scrollbar, A11y, Autoplay, FreeMode]}
         spaceBetween={25}
-        slidesPerView={3}
-        navigation
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+          1280: {
+            slidesPerView: 4,
+          },
+          1536: {
+            slidesPerView: 5,
+          },
+          1854: {
+            slidesPerView: 6,
+          },
+        }}
         autoplay={{
           delay: 1800,
+        }}
+        freeMode={{
+          enabled: true,
+          sticky: false,
         }}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
