@@ -13,9 +13,6 @@ import {
 
 import { Swiper, SwiperSlide } from "swiper/react";
 export default function Banner() {
-  // autoplay={{
-  //   delay: 1800,
-  // }}
   return (
     <>
       <Swiper

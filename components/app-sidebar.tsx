@@ -1,21 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  CircleArrowLeft,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  Shield,
-  SquareTerminal,
-  User,
-} from "lucide-react";
+import { Shield, User } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 // import { NavProjects } from "@/components/nav-projects";
@@ -35,7 +21,6 @@ import { useSession } from "next-auth/react";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: d } = useSession();
   const { user } = d || {};
-  console.log(user);
   const adminRoutes = {
     title: "Admin Dashboard",
     url: "#",

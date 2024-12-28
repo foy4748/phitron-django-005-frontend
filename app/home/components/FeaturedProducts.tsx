@@ -14,18 +14,27 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { TSingleProduct } from "@/types/product";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import Loading from "@/app/products/loading";
 
 export default function FeaturedProducts() {
   const [data, setData] = useState<TSingleProduct[]>([]);
+  const [isLoading, setIsloading] = useState<boolean>(true);
   useEffect(() => {
-    getRandomProductList().then((d) => {
-      setData(d);
-    });
+    getRandomProductList()
+      .then((d) => {
+        setData(d);
+        setIsloading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsloading(false);
+      });
   }, []);
+  if (isLoading) return <Loading />;
   return (
     <>
-      <h2 className="text-2xl font-bold my-8">Featured Products</h2>
+      <h2 className="text-2xl font-bold mt-8 mb-2">Featured Products</h2>
       <Swiper
         // install Swiper modules
         modules={[Navigation, Scrollbar, A11y, Autoplay, FreeMode]}

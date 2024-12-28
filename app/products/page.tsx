@@ -7,6 +7,8 @@ import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
 import { getProductList } from "@/actions/product/getProductList";
 import ProductCard from "./components/ProductCard";
 import CategoryTitle from "./components/CategoryTitle";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 // Product Fetch Func
 
@@ -31,16 +33,18 @@ export default async function ProductCardGrid({
       <h1 className="my-4">
         <CategoryTitle className="text-4xl" />
       </h1>
-      <GridSystem>
-        {Array.isArray(product_list) &&
-          product_list.map((p, idx) => {
-            return (
-              <Col key={idx}>
-                <ProductCard data={p} />
-              </Col>
-            );
-          })}
-      </GridSystem>
+      <Suspense fallback={<Loading />}>
+        <GridSystem>
+          {Array.isArray(product_list) &&
+            product_list.map((p, idx) => {
+              return (
+                <Col key={idx}>
+                  <ProductCard data={p} />
+                </Col>
+              );
+            })}
+        </GridSystem>
+      </Suspense>
     </>
   );
 }

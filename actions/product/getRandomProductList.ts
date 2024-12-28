@@ -8,6 +8,7 @@ export const getRandomProductList = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
   const data: TSingleProduct[] = await res.json();
   return data;

@@ -119,7 +119,12 @@ export default function LoginPageView() {
               <Link className="text-link" href="/register">
                 Register
               </Link>{" "}
-              .
+            </p>
+            <p>
+              Forgot Password ?{" "}
+              <Link className="text-link" href="/reset-password">
+                Reset Password
+              </Link>
             </p>
 
             <div className="flex">
