@@ -7,6 +7,7 @@ import AddToCartButton from "./components/AddToCartButton";
 import ProductReviewList from "./components/ProductReviewList";
 import { AddOrUpdateProductReview } from "./components/AddOrUpdateProductReview";
 import AddToWishList from "./components/AddToWishList";
+import { getProductAndUserSpecificWishListItem } from "@/actions/wishList/getProductAndUserSpecificWishListItem";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -23,6 +24,7 @@ export const getSingleProduct = async (id: string) => {
 export default async function ProductDetails({ params }: Props) {
   const { id } = await params;
   const data = await getSingleProduct(id);
+  const isInWishList = await getProductAndUserSpecificWishListItem(id);
   const { product_owner } = data as { product_owner: TProductOwner };
   return (
     <>
@@ -40,29 +42,29 @@ export default async function ProductDetails({ params }: Props) {
             />
           </figure>
         </Col>
-        <Col className="lg:col-span-6">
-          <h1>{data?.product_name}</h1>
-          <p>
-            {" "}
-            by {product_owner?.first_name} {product_owner?.last_name}
-          </p>
-          <p>
-            Price: $ {data.unit_price} / {data.unit_name}
-          </p>
-          <h2>Description</h2>
-          <p>{data.description}</p>
-          <div className="flex gap-2">
-            <AddToCartButton />
-            <Button>Buy Now</Button>
-            <AddToWishList product={data.id} />
+        <Col className="lg:col-span-6 flex items-center">
+          <div className="space-y-4">
+            <h1 className="text-xl font-bold">{data?.product_name}</h1>
+            <p>
+              {" "}
+              by{" "}
+              <span className="italic">
+                {product_owner?.first_name} {product_owner?.last_name}
+              </span>
+            </p>
+            <p>
+              Price: $ {data.unit_price} / {data.unit_name}
+            </p>
+            <h2>Description</h2>
+            <p>{data.description}</p>
+            <div className="flex gap-2">
+              <AddToCartButton />
+              {!isInWishList ? <AddToWishList product={data.id} /> : <></>}
+            </div>
           </div>
         </Col>
         <Col className="md:col-span-12 lg:col-span-6">
           <ProductReviewList id={Number(id)} />
-        </Col>
-        <Col className="md:col-span-12 lg:col-span-6">
-          <AddOrUpdateProductReview />
-          <AddOrUpdateProductReview editMode={true} review_id={1} />
         </Col>
       </GridSystem>
     </>

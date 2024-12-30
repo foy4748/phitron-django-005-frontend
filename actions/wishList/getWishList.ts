@@ -1,3 +1,4 @@
+"use server";
 import { TWishListItem } from "@/types/wishList";
 import { cookies } from "next/headers";
 
@@ -11,6 +12,9 @@ export const getWishList = async () => {
     headers: {
       Authorization: `Token ${ck.get("token")?.value}`,
       "Content-Type": "application/json",
+    },
+    next: {
+      tags: ["wishlist-items"],
     },
   });
   const data: TWishListItem[] = await res.json();
