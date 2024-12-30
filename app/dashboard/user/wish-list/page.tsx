@@ -4,6 +4,7 @@ import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import RemoveWishListButton from "./components/RemoveWishListButton";
 
 export default async function WishList() {
   const data = await getWishList();
@@ -26,6 +27,7 @@ export default async function WishList() {
                       {" "}
                       <Button> Details </Button>
                     </Link>
+                    <RemoveWishListButton wishlist_id={d.id} />
                   </div>
                 </Col>
                 <Col className="lg:col-span-6">
