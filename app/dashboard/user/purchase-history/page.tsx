@@ -32,7 +32,7 @@ export default async function PurchaseHistoryPage() {
                     <p>{d.product.description}</p>
                     <p>Purchased at: {moment(d.created_at).fromNow()} </p>
                     <div className="space-x-4">
-                      <Link href={`/profile/review/${d.product.id}`}>
+                      <Link href={`/dashboard/user/review/${d.product.id}`}>
                         <Button>Review Product</Button>
                       </Link>
                       <Link href={`/products/${d.product.id}`}>

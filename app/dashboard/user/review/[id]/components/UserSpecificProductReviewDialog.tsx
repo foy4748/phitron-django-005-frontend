@@ -13,6 +13,7 @@ import { DialogDescription } from "@radix-ui/react-dialog";
 import DeleteProductReview from "./DeleteProductReview";
 import { useState } from "react";
 import { TProductReview } from "@/types/review";
+import { useSession } from "next-auth/react";
 
 export default function UserSpecificProductReviewDialog({
   singleReviewData,
@@ -20,6 +21,7 @@ export default function UserSpecificProductReviewDialog({
   singleReviewData: TProductReview;
 }) {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const { data: session } = useSession();
   return (
     <>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -39,10 +41,16 @@ export default function UserSpecificProductReviewDialog({
             {moment(singleReviewData.created_at).fromNow()}
           </p>
           <div className="flex items-center mt-2">
-            <DeleteProductReview review_id={singleReviewData.id} />
-            <DialogTrigger className=" w-1/2 flex items-center hover:text-green-500">
-              <PenSquareIcon className="me-2" />| Update
-            </DialogTrigger>
+            {session?.user.user_id == singleReviewData.reviewer ? (
+              <>
+                <DeleteProductReview review_id={singleReviewData.id} />
+                <DialogTrigger className=" w-1/2 flex items-center hover:text-green-500">
+                  <PenSquareIcon className="me-2" />| Update
+                </DialogTrigger>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <DialogContent>

@@ -180,7 +180,6 @@ export default function AddOrUpdateProduct({
 
   return (
     <Form {...form}>
-      {JSON.stringify(form.formState.errors)}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
