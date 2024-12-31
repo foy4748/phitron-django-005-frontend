@@ -18,7 +18,7 @@ import Loading from "./loading";
 export default async function ProductCardGrid({
   searchParams,
 }: {
-  searchParams: ReadonlyURLSearchParams;
+  searchParams: Promise<ReadonlyURLSearchParams>;
 }) {
   const s = await searchParams;
   const strParams = JSON.stringify(s);

@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,40 +8,55 @@ import {
 import { Menu, Sprout } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { nanoid } from "nanoid";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import LogOut from "../LogOut";
 
 const Navbar = () => {
+  const { data: session } = useSession();
   return (
-    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between gap-6 rounded-2xl mt-5 w-full">
+    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl mt-5 w-full">
       {/* ICON */}
-      <Sprout />
-      <ul className="hidden md:flex items-center gap-10 text-card-foreground">
+      <figure className="flex justify-start">
+        <Sprout />
+      </figure>
+      <ul className="hidden md:flex justify-center items-center gap-10 text-card-foreground">
         <li className="text-primary font-medium">
           <Link href="/">Home</Link>
         </li>
         <li>
           <Link href="/products">Products</Link>
         </li>
+        {}
         <li>
           <Link href="/dashboard">Dashboard</Link>
         </li>
-        <li>
-          <Link href="/login">Login</Link>
-        </li>
       </ul>
 
-      <div className="flex items-center">
-        <Link href="/register">
-          <Button variant="secondary" className="hidden md:block px-2">
-            Register
-          </Button>
-        </Link>
-        <Link href="/login">
-          <Button className="hidden md:block ml-2 mr-2">Get Started</Button>
-        </Link>
+      <div className="flex items-center justify-end">
+        {session?.user ? (
+          <>
+            <a href="#">
+              <LogOut variant="secondary" className="hidden md:block px-2" />
+            </a>
+            <Link href="/dashboard">
+              <Button className="hidden md:block ml-2 mr-2">Dashboard</Button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/register">
+              <Button variant="secondary" className="hidden md:block px-2">
+                Register
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button className="hidden md:block ml-2 mr-2">Login</Button>
+            </Link>
+          </>
+        )}
 
-        <div className="flex md:hidden mr-2 items-center gap-2">
+        <div className="flex md:hidden mr-2 items-center justify-end gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon">
@@ -59,17 +75,16 @@ const Navbar = () => {
                 <Link href="/dashboard">Dashboard</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/register">Register</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/login">
+                <Link href="/register">
                   <Button variant="secondary" className="w-full text-sm">
-                    Login
+                    Register
                   </Button>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Button className="w-full text-sm">Get Started</Button>
+                <Link href="/login">
+                  <Button className="w-full text-sm">Login</Button>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
