@@ -31,6 +31,7 @@ import { getSpecifcProduct } from "@/actions/product/getSpecificProduct";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import DeleteProductButton from "../../[id]/components/DeleteProductButton";
 import { uploadPhoto } from "@/actions/uploadPhoto";
+import { useRouter } from "next/navigation";
 
 const MAX_FILE_SIZE = 0.9 * 1024 * 1024; // 900 KB
 const ACCEPTED_IMAGE_TYPES = [
@@ -73,6 +74,7 @@ export default function AddOrUpdateProduct({
     description: z.string(),
   });
   const { categories } = useCategory();
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -137,6 +139,8 @@ export default function AddOrUpdateProduct({
             </pre>
           ),
         });
+        form.reset();
+        router.push("/dashboard/user/product-list");
       } catch (error) {
         console.log(error);
         // Toaster
@@ -163,6 +167,7 @@ export default function AddOrUpdateProduct({
             </pre>
           ),
         });
+        router.push("/dashboard/user/product-list");
       } catch (error) {
         console.log(error);
         // Toaster

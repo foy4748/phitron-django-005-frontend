@@ -61,7 +61,7 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <DeleteProductButton product_id={row.original.id} isAdminOnly />
+          <DeleteProductButton product_id={row.original.id} />
         </>
       );
     },

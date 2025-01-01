@@ -2,16 +2,26 @@
 import { addToCart } from "@/actions/cart/addToCart";
 import { Button } from "@/components/ui/button";
 import { TAddToCartPayload } from "@/types/cart";
-import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const AddToCartButton = () => {
   const params = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
   const [quantity, setQuantity] = useState(1);
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
   const handleAddToCart = async () => {
+    // Checking if user is logged in
+    if (!session?.user) {
+      router.push(`/login?callbackUrl=${pathname}`);
+      return;
+    }
+    // =======
     const payload: TAddToCartPayload = {
       quantity,
       product: Number(params.id),

@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/auth/loginUser";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const FormSchema = z.object({
@@ -35,6 +35,7 @@ const FormSchema = z.object({
 export default function LoginPageView() {
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -54,7 +55,8 @@ export default function LoginPageView() {
         </pre>
       ),
     });
-    const callbackUrl = pathname.includes("login") ? "/" : pathname;
+    let callbackUrl = pathname.includes("login") ? "/" : pathname;
+    callbackUrl = searchParams.get("callbackUrl") || pathname;
     try {
       const d = await loginUser(data);
       if (d.success) {

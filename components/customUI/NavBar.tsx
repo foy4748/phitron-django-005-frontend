@@ -11,26 +11,33 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import LogOut from "../LogOut";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const isActive = (route: string) =>
+    pathname.startsWith(route) ? "text-primary" : "";
   return (
     <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl mt-5 w-full">
       {/* ICON */}
       <figure className="flex justify-start">
-        <Sprout />
+        <Link href="/">
+          <Sprout className={pathname == "/" ? "text-primary" : "opacity-0"} />
+        </Link>
       </figure>
       <ul className="hidden md:flex justify-center items-center gap-10 text-card-foreground">
-        <li className="text-primary font-medium">
+        <li className={`font-medium ${pathname == "/" ? "text-primary" : ""}`}>
           <Link href="/">Home</Link>
         </li>
-        <li>
+        <li className={isActive("/products")}>
           <Link href="/products">Products</Link>
         </li>
-        {}
-        <li>
-          <Link href="/dashboard">Dashboard</Link>
-        </li>
+        {session?.user && (
+          <li className={isActive("/dashboard")}>
+            <Link href="/dashboard">Dashboard</Link>
+          </li>
+        )}
       </ul>
 
       <div className="flex items-center justify-end">

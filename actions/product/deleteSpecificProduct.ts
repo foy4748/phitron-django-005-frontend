@@ -22,7 +22,7 @@ export const deleteProduct = async (
       },
     });
     revalidateTag(`single-product-${id}`);
-    return true;
+    return { success: true };
   } catch (error) {
     console.log(error);
     return { success: false, message: "Failed to Delete Product" };
