@@ -3,21 +3,22 @@ import UserProductListView from "./components/ProductTable";
 import { columns } from "./components/ProductColumns";
 import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { TProductList } from "@/types/product";
 
 export default async function UserProductListPage({
   searchParams,
 }: {
-  searchParams: ReadonlyURLSearchParams;
+  searchParams: Promise<ReadonlyURLSearchParams>;
 }) {
   const s = await searchParams;
   const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
   const queryStr = new URLSearchParams(params).toString();
-  const data = await getProductList(queryStr);
+  const data: TProductList = await getProductList(queryStr);
   return (
     <>
       <SearchAndFilterProduct />
-      <UserProductListView columns={columns} data={data} />
+      <UserProductListView columns={columns} data={data?.results} />
     </>
   );
 }

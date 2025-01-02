@@ -3,21 +3,22 @@ import AdminProductListView from "./components/ProductTable";
 import { columns } from "./components/ProductColumns";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
+import { TProductList } from "@/types/product";
 
 export default async function AdminProductListPage({
   searchParams,
 }: {
-  searchParams: ReadonlyURLSearchParams;
+  searchParams: Promise<ReadonlyURLSearchParams>;
 }) {
   const s = await searchParams;
   const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
   const queryStr = new URLSearchParams(params).toString();
-  const data = await getProductList(queryStr, true);
+  const data: TProductList = await getProductList(queryStr, true);
   return (
     <>
       <SearchAndFilterProduct />
-      <AdminProductListView columns={columns} data={data} />
+      <AdminProductListView columns={columns} data={data?.results} />
     </>
   );
 }

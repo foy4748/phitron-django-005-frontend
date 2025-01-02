@@ -36,10 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={geistSans.className}>
         <NextAuthSessionProvider>
           <NavBar />
-          {children}
+          <main className="px-2 md:container mx-auto"> {children}</main>
           <Toaster />
         </NextAuthSessionProvider>
       </body>

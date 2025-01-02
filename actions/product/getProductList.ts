@@ -1,6 +1,5 @@
 "use server";
 import { cookies } from "next/headers";
-import { TSingleProduct } from "@/types/product";
 export const getProductList = async (
   queryStr?: string,
   isAdminOnly?: boolean
@@ -22,7 +21,7 @@ export const getProductList = async (
         "Content-Type": "application/json",
       },
     });
-    const data: TSingleProduct[] = await res.json();
+    const data = await res.json();
     return data;
   } catch (error) {
     console.log(error);

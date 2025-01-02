@@ -55,6 +55,7 @@ import {
   useState,
 } from "react";
 import useQueryParams from "@/hooks/useQueryParams";
+import { TProductCategory } from "@/types/product";
 
 /* ---  END OF Dialog Related */
 
@@ -74,10 +75,13 @@ interface FormValues {
 
 type PropTypes = {
   setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
+  categories: TProductCategory[];
 };
 
-export function SearchAndFilterProductForm({ setIsDialogOpen }: PropTypes) {
-  const { categories } = useCategory();
+export function SearchAndFilterProductForm({
+  setIsDialogOpen,
+  categories,
+}: PropTypes) {
   const queryParams = useQueryParams();
 
   const router = useRouter();
@@ -115,8 +119,8 @@ export function SearchAndFilterProductForm({ setIsDialogOpen }: PropTypes) {
       const queryStr = new URLSearchParams(
         filteredValues as Record<string, string>
       ).toString();
-      router.push(`${pathname}${queryStr ? `?${queryStr}` : ""}`);
       if (setIsDialogOpen) setIsDialogOpen(false);
+      router.push(`${pathname}${queryStr ? `?${queryStr}` : ""}`);
       // toast({
       //   title: "You submitted the following values:",
       //   description: (
@@ -161,7 +165,11 @@ export function SearchAndFilterProductForm({ setIsDialogOpen }: PropTypes) {
                     {Array.isArray(categories) &&
                       categories?.map(({ id, category }) => {
                         return (
-                          <SelectItem key={id} value={String(Number(id))}>
+                          <SelectItem
+                            className="cursor-pointer hover:bg-primary hover:text-white py-2"
+                            key={id}
+                            value={String(Number(id))}
+                          >
                             {category}
                           </SelectItem>
                         );
@@ -230,6 +238,7 @@ export function SearchAndFilterProductForm({ setIsDialogOpen }: PropTypes) {
 export function SearchAndFilterProduct() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const { categories } = useCategory();
 
   if (isDesktop) {
     return (
@@ -242,7 +251,10 @@ export function SearchAndFilterProduct() {
             <DialogTitle>Search and Filter</DialogTitle>
             <DialogDescription></DialogDescription>
           </DialogHeader>
-          <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
+          <SearchAndFilterProductForm
+            setIsDialogOpen={setOpen}
+            categories={categories}
+          />
         </DialogContent>
       </Dialog>
     );
@@ -258,7 +270,10 @@ export function SearchAndFilterProduct() {
           <DrawerTitle>Search and Filter</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <SearchAndFilterProductForm setIsDialogOpen={setOpen} />
+        <SearchAndFilterProductForm
+          setIsDialogOpen={setOpen}
+          categories={categories}
+        />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -266,21 +281,5 @@ export function SearchAndFilterProduct() {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  );
-}
-
-function ProfileForm({ className }: React.ComponentProps<"form">) {
-  return (
-    <form className={cn("grid items-start gap-4", className)}>
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" defaultValue="shadcn@example.com" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="username">Username</Label>
-        <Input id="username" defaultValue="@shadcn" />
-      </div>
-      <Button type="submit">Save changes</Button>
-    </form>
   );
 }

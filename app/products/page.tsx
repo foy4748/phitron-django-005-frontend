@@ -9,6 +9,7 @@ import ProductCard from "./components/ProductCard";
 import CategoryTitle from "./components/CategoryTitle";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { TProductList } from "@/types/product";
 
 // Product Fetch Func
 
@@ -23,20 +24,23 @@ export default async function ProductCardGrid({
   const s = await searchParams;
   const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
+  params.limit = params?.limit || 12;
   const queryStr = new URLSearchParams(params).toString();
-  const product_list = await getProductList(queryStr);
+  const product_list: TProductList = await getProductList(queryStr);
+  console.log(product_list);
   const d = await getServerSession(authOptions);
   return (
     <>
-      <p>{JSON.stringify(d)}</p>
-      <SearchAndFilterProduct />
+      <div className="flex justify-end mt-4">
+        <SearchAndFilterProduct />
+      </div>
       <h1 className="my-4">
         <CategoryTitle className="text-4xl" />
       </h1>
       <Suspense fallback={<Loading />}>
         <GridSystem>
-          {Array.isArray(product_list) &&
-            product_list.map((p, idx) => {
+          {Array.isArray(product_list?.results) &&
+            product_list?.results?.map((p, idx) => {
               return (
                 <Col key={idx}>
                   <ProductCard data={p} />

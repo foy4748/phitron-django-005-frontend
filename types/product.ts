@@ -32,6 +32,13 @@ export type TSingleProduct = {
   updated_at: string;
 };
 
+export type TProductList = {
+  count: number | `${number}`;
+  next: string | null;
+  previous: string | null;
+  results: TSingleProduct[];
+};
+
 export type TProductPayload = {
   product_name: string;
   image_url: string;
