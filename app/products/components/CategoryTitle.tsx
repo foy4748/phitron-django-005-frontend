@@ -13,7 +13,7 @@ const CategoryTitle = ({ className }: { className?: string }) => {
     return (
       <>
         <span className={cn("text-bold font-2xl", className)}>
-          {mappedCategories[categoryId]}
+          {mappedCategories[Number(categoryId)]}
         </span>
       </>
     );

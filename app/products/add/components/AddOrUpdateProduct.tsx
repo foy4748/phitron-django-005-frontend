@@ -308,7 +308,6 @@ export default function AddOrUpdateProduct({
         {editMode && (
           <DeleteProductButton
             product_id={Number(String(product_id))}
-            isAdminOnly={isAdminOnly}
             setIsDialogOpen={setIsDialogOpen}
           />
         )}

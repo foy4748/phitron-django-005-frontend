@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ChevronRight,
-  CircleArrowLeft,
-  SeparatorVertical,
-  type LucideIcon,
-} from "lucide-react";
+import { ChevronRight, CircleArrowLeft, type LucideIcon } from "lucide-react";
 
 import {
   Collapsible,

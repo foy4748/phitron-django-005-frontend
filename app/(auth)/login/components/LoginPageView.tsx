@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/auth/loginUser";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const FormSchema = z.object({
@@ -33,7 +33,7 @@ const FormSchema = z.object({
 });
 
 export default function LoginPageView() {
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -117,7 +117,7 @@ export default function LoginPageView() {
             />
 
             <p>
-              You don't have an account? Please,{" "}
+              You don{"'"}t have an account? Please,{" "}
               <Link className="text-link" href="/register">
                 Register
               </Link>{" "}

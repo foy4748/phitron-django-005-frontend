@@ -1,5 +1,4 @@
 import { TProductReview } from "@/types/review";
-import { DeleteReviewButton } from "./DeleteReviewButton";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import UserSpecificProductReviewDialog from "@/app/dashboard/user/review/[id]/components/UserSpecificProductReviewDialog";

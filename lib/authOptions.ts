@@ -20,6 +20,7 @@ const authOptions: AuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
+      /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
 

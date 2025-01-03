@@ -3,7 +3,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TSingleProduct } from "@/types/product";
 import Image from "next/image";
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 import { ProductUpdateModal } from "./ProductUpdateModal";
 import DeleteProductButton from "@/app/products/[id]/components/DeleteProductButton";
 export const columns: ColumnDef<TSingleProduct>[] = [
@@ -62,7 +61,7 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <DeleteProductButton product_id={row.original.id} isAdminOnly />
+          <DeleteProductButton product_id={row.original.id} />
         </>
       );
     },

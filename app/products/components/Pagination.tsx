@@ -2,7 +2,6 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
@@ -24,8 +23,6 @@ export default function ProductPagination({ count, limit }: Props) {
       <Pagination>
         <PaginationContent>
           {repeat(Array.from(Array(pages).keys()), 1).map((_, idx) => {
-            const strParams = JSON.stringify(s);
-            const params = JSON.parse(strParams);
             const isActive =
               Number(s.get("page")) == _ + 1 ||
               (!Number(s.get("page")) && _ + 1 == 1);

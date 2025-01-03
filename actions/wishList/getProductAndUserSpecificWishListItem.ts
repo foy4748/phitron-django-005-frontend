@@ -14,12 +14,12 @@ export const getProductAndUserSpecificWishListItem = async (
     headers: {
       Authorization: `Token ${ck.get("token")?.value}`,
       "Content-Type": "application/json",
-      next: {
-        tags: [
-          "single-wish-list-item",
-          `product-specific-wishlist-${product_id}`,
-        ],
-      },
+    },
+    next: {
+      tags: [
+        "single-wish-list-item",
+        `product-specific-wishlist-${product_id}`,
+      ],
     },
   });
   if (res.ok) {

@@ -14,7 +14,7 @@ import {
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { TSingleProduct } from "@/types/product";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "@/app/products/loading";
 
 export default function FeaturedProducts() {

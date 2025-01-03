@@ -76,8 +76,8 @@ export default function Banner() {
                 Your One-Stop Grocery Shop
               </h1>
               <p className="italic text-white text-justify">
-                From farm-fresh fruits and vegetables to pantry staples, we've
-                got everything you need. Start your shopping journey with us
+                From farm-fresh fruits and vegetables to pantry staples, we{"'"}
+                ve got everything you need. Start your shopping journey with us
                 today!
               </p>
 
