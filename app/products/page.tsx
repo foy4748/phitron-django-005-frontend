@@ -10,6 +10,7 @@ import CategoryTitle from "./components/CategoryTitle";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { TProductList } from "@/types/product";
+import ProductPagination from "./components/Pagination";
 
 // Product Fetch Func
 
@@ -48,6 +49,7 @@ export default async function ProductCardGrid({
               );
             })}
         </GridSystem>
+        <ProductPagination count={product_list.count} limit={params.limit} />
       </Suspense>
     </>
   );
