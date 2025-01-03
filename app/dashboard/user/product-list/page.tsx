@@ -4,6 +4,7 @@ import { columns } from "./components/ProductColumns";
 import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { TProductList } from "@/types/product";
+import ProductPagination from "@/app/products/components/Pagination";
 
 export default async function UserProductListPage({
   searchParams,
@@ -19,6 +20,7 @@ export default async function UserProductListPage({
     <>
       <SearchAndFilterProduct />
       <UserProductListView columns={columns} data={data?.results} />
+      <ProductPagination count={data.count} limit={10} />
     </>
   );
 }

@@ -1,7 +1,5 @@
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
-import { getServerSession } from "next-auth";
-import authOptions from "@/lib/authOptions";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { SearchAndFilterProduct } from "./components/SearchAndFilterProduct";
 import { getProductList } from "@/actions/product/getProductList";
@@ -28,8 +26,6 @@ export default async function ProductCardGrid({
   params.limit = params?.limit || 12;
   const queryStr = new URLSearchParams(params).toString();
   const product_list: TProductList = await getProductList(queryStr);
-  console.log(product_list);
-  const d = await getServerSession(authOptions);
   return (
     <>
       <div className="flex justify-end mt-4">

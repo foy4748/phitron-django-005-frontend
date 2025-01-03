@@ -19,16 +19,19 @@ export default function ProductPagination({ count, limit }: Props) {
     Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
   const pathname = usePathname();
   const s = useSearchParams();
-  const strParams = JSON.stringify(s);
-  const params = JSON.parse(strParams);
   if (pages > 1)
     return (
       <Pagination>
         <PaginationContent>
           {repeat(Array.from(Array(pages).keys()), 1).map((_, idx) => {
-            const isActive = Number(s.get("page")) == _ + 1;
-            const current_params = { ...params, page: _ + 1 };
-            const queryStr = new URLSearchParams(current_params).toString();
+            const strParams = JSON.stringify(s);
+            const params = JSON.parse(strParams);
+            const isActive =
+              Number(s.get("page")) == _ + 1 ||
+              (!Number(s.get("page")) && _ + 1 == 1);
+            const current_params = new URLSearchParams(s);
+            current_params.set("page", String(_ + 1));
+            const queryStr = current_params.toString();
             return (
               <PaginationItem key={idx}>
                 <PaginationLink

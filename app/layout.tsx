@@ -18,11 +18,11 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 200 600 700 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 200 600 700 900",
-});
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 200 600 700 900",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className={geistSans.className}>
         <NextAuthSessionProvider>
           <NavBar />
-          <main className="px-2 md:container mx-auto"> {children}</main>
+          <main className="px-2 md:px-4 mx-auto"> {children}</main>
           <Toaster />
         </NextAuthSessionProvider>
       </body>
