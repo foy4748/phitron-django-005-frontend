@@ -31,7 +31,7 @@ export default function FeaturedProducts() {
         setIsloading(false);
       });
   }, []);
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading cardsNumber={3} />;
   return (
     <>
       <h2 className="text-2xl font-bold mt-8 mb-2">Featured Products</h2>

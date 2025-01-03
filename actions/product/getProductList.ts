@@ -10,7 +10,12 @@ export const getProductList = async (
     const url = isAdminOnly
       ? `${S}/admin-specific/product-list`
       : `${S}/product-list`;
-
+    const params = new URLSearchParams(queryStr);
+    const paramsObject = Object.fromEntries(params.entries());
+    const tags = ["product_list"];
+    for (const key in paramsObject) {
+      tags.push(`product_${key}_${paramsObject[key]}`);
+    }
     // Very Useful
     // https://stackoverflow.com/questions/11704267/in-javascript-how-to-conditionally-add-a-member-to-an-object
     const res = await fetch(`${url}/${queryStr ? `?${queryStr}` : ""}`, {
@@ -19,6 +24,9 @@ export const getProductList = async (
           Authorization: `Token ${ck.get("token")?.value}`,
         }),
         "Content-Type": "application/json",
+      },
+      next: {
+        tags,
       },
     });
     const data = await res.json();

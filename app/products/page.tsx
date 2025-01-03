@@ -2,6 +2,7 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Loading from "./loading";
 import ProductCardGrid from "./components/ProductCardGrid";
+import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 
 // Product Fetch Func
 
@@ -16,6 +17,9 @@ export default async function ProductCardPage({
   return (
     <>
       <Suspense fallback={<Loading />}>
+        <div className="flex justify-end mt-4">
+          <SearchAndFilterProduct />
+        </div>
         <ProductCardGrid searchParams={searchParams} />
       </Suspense>
     </>

@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Select,
   SelectContent,
@@ -24,7 +24,6 @@ import useCategory from "@/hooks/useCategory";
 
 /* Dialog Related */
 
-import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,16 +45,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useQueryParams from "@/hooks/useQueryParams";
 import { TProductCategory } from "@/types/product";
+import { revalidatePath } from "next/cache";
 
 /* ---  END OF Dialog Related */
 
@@ -120,7 +113,9 @@ export function SearchAndFilterProductForm({
         filteredValues as Record<string, string>
       ).toString();
       if (setIsDialogOpen) setIsDialogOpen(false);
-      router.push(`${pathname}${queryStr ? `?${queryStr}` : ""}`);
+      const url = `${pathname}${queryStr ? `?${queryStr}` : ""}`;
+      router.push(url);
+      revalidatePath(url);
       // toast({
       //   title: "You submitted the following values:",
       //   description: (
