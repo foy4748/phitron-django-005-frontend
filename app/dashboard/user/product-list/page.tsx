@@ -1,5 +1,5 @@
 import { getProductList } from "@/actions/product/getProductList";
-import UserProductListView from "./components/ProductTable";
+import UserProductListView from "@/app/dashboard/admin/product-list/components/ProductTable";
 import { columns } from "./components/ProductColumns";
 import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 import { ReadonlyURLSearchParams } from "next/navigation";

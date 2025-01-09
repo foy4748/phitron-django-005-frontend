@@ -18,7 +18,9 @@ export const getProductList = async (
     }
     // Very Useful
     // https://stackoverflow.com/questions/11704267/in-javascript-how-to-conditionally-add-a-member-to-an-object
-    const res = await fetch(`${url}/${queryStr ? `?${queryStr}` : ""}`, {
+    const fetchUrl = `${url}/${queryStr ? `?${queryStr}` : ""}`;
+    console.log(fetchUrl);
+    const res = await fetch(fetchUrl, {
       headers: {
         ...(isAdminOnly && {
           Authorization: `Token ${ck.get("token")?.value}`,
@@ -30,6 +32,7 @@ export const getProductList = async (
       },
     });
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

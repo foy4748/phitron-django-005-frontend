@@ -26,10 +26,11 @@ export default function ProductCardGridUseClient() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async function () {
-      const strParams = JSON.stringify(s);
-      const params = JSON.parse(strParams);
-      params.limit = params?.limit || 12;
-      const queryStr = new URLSearchParams(params).toString();
+      setLoading(true);
+      const searchParamsObj = new URLSearchParams(s);
+      if (!searchParamsObj.get("limit")) searchParamsObj.set("limit", "12");
+      const queryStr = searchParamsObj.toString();
+      console.log(queryStr);
       const productList: TProductList = await getProductList(queryStr);
       setProductList(productList);
       setLoading(false);
