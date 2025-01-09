@@ -30,7 +30,6 @@ export function ProductUpdateModal({
         <ScrollArea className="h-[70vh]">
           <AddOrUpdateProduct
             editMode
-            isAdminOnly
             product_id={product_id}
             setIsDialogOpen={setIsDialogOpen}
           />

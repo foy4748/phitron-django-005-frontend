@@ -28,10 +28,11 @@ import { updateProduct } from "@/actions/product/updateProduct";
 import { toast } from "@/hooks/use-toast";
 import useCategory from "@/hooks/useCategory";
 import { getSpecifcProduct } from "@/actions/product/getSpecificProduct";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import DeleteProductButton from "../../[id]/components/DeleteProductButton";
 import { uploadPhoto } from "@/actions/uploadPhoto";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Loading } from "@/app/dashboard/loading";
 
 const MAX_FILE_SIZE = 0.9 * 1024 * 1024; // 900 KB
 const ACCEPTED_IMAGE_TYPES = [
@@ -43,14 +44,12 @@ const ACCEPTED_IMAGE_TYPES = [
 
 type PropTypes = {
   editMode?: boolean | undefined;
-  isAdminOnly?: boolean | undefined;
   product_id?: number | `${number}`;
   setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function AddOrUpdateProduct({
   editMode,
-  isAdminOnly,
   product_id,
   setIsDialogOpen,
 }: PropTypes) {
@@ -74,6 +73,8 @@ export default function AddOrUpdateProduct({
     description: z.string(),
   });
   const { categories } = useCategory();
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -92,6 +93,7 @@ export default function AddOrUpdateProduct({
 
   useEffect(() => {
     if (editMode) {
+      setLoading(true);
       const ops = async () => {
         const data = await getSpecifcProduct(Number(product_id));
         const editModeDefault = {
@@ -104,6 +106,7 @@ export default function AddOrUpdateProduct({
         };
         console.log(editModeDefault);
         form.reset(editModeDefault);
+        setLoading(false);
       };
       ops();
     }
@@ -113,6 +116,9 @@ export default function AddOrUpdateProduct({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    toast({
+      title: "Submitting...",
+    });
     const photoFile = new FormData();
     const file = values["image"];
     if (file) {
@@ -156,6 +162,7 @@ export default function AddOrUpdateProduct({
     } else {
       try {
         console.log(values);
+        const isAdminOnly = pathname.startsWith("/dashboard/admin");
         await updateProduct(values, Number(String(product_id)), isAdminOnly);
         if (setIsDialogOpen) setIsDialogOpen(false);
         // Toaster
@@ -183,6 +190,7 @@ export default function AddOrUpdateProduct({
     }
   }
 
+  if (loading) return <Loading />;
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
