@@ -37,7 +37,7 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     header: "Category",
     cell: ({ row }) => {
       const { category } = row.original;
-      return <>{category}</>;
+      return <>{category?.category}</>;
     },
   },
   {

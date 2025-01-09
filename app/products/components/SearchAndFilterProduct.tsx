@@ -48,7 +48,6 @@ import { Input } from "@/components/ui/input";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useQueryParams from "@/hooks/useQueryParams";
 import { TProductCategory } from "@/types/product";
-import { revalidatePath } from "next/cache";
 
 /* ---  END OF Dialog Related */
 
@@ -115,7 +114,6 @@ export function SearchAndFilterProductForm({
       if (setIsDialogOpen) setIsDialogOpen(false);
       const url = `${pathname}${queryStr ? `?${queryStr}` : ""}`;
       router.push(url);
-      revalidatePath(url);
       // toast({
       //   title: "You submitted the following values:",
       //   description: (
