@@ -5,6 +5,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
+import { toast } from "@/hooks/use-toast";
 import { usePathname, useSearchParams } from "next/navigation";
 
 type Props = {
@@ -13,6 +14,11 @@ type Props = {
 };
 
 export default function ProductPagination({ count, limit }: Props) {
+  const linkOnClick = () => {
+    toast({
+      title: "Loading...",
+    });
+  };
   const pages = Math.ceil(Number(count) / (Number(limit) || 1));
   const repeat = (arr: number[], n: number) =>
     Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
@@ -31,14 +37,14 @@ export default function ProductPagination({ count, limit }: Props) {
             const queryStr = current_params.toString();
             if (_ + 1 == 1)
               return (
-                <PaginationItem key={idx}>
+                <PaginationItem key={idx} onClick={linkOnClick}>
                   <PaginationLink isActive={isActive} href={pathname}>
                     {_ + 1}
                   </PaginationLink>
                 </PaginationItem>
               );
             return (
-              <PaginationItem key={idx}>
+              <PaginationItem key={idx} onClick={linkOnClick}>
                 <PaginationLink
                   isActive={isActive}
                   href={`${pathname}?${queryStr}`}
