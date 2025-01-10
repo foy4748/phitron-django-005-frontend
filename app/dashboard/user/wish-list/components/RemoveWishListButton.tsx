@@ -9,6 +9,9 @@ export default function RemoveWishListButton({
   wishlist_id: number | `${number}`;
 }) {
   const handleRemoveWishList = async () => {
+    toast({
+      title: "Removing the item",
+    });
     const res = await deleteWishListItem(wishlist_id);
     if (res) {
       toast({

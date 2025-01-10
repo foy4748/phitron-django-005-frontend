@@ -17,11 +17,15 @@ export const addToWishList = async (payload: TAddToWishListPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
-    revalidateTag("wishListItems");
-    return data;
+    if (res.status == 201) {
+      const data = await res.json();
+      revalidateTag("wishListItems");
+      return data;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
-    return { success: false, message: "FAILED to add to wishList" };
+    return null;
   }
 };

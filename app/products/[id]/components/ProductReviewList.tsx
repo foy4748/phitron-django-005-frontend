@@ -25,7 +25,10 @@ export default async function ProductReviewList({ id }: PropType) {
         {Array.isArray(data) &&
           data?.map((d) => {
             return (
-              <Col key={d.id} className="flex justify-center items-center">
+              <Col
+                key={d.id}
+                className="lg:col-span-3 flex justify-center items-center"
+              >
                 <div>
                   <UserSpecificProductReviewDialog singleReviewData={d} />
                 </div>

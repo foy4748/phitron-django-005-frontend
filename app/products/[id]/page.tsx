@@ -61,10 +61,8 @@ export default async function ProductDetails({ params }: Props) {
             </div>
           </div>
         </Col>
-        <Col className="md:col-span-12 lg:col-span-6">
-          <ProductReviewList id={Number(id)} />
-        </Col>
       </GridSystem>
+      <ProductReviewList id={Number(id)} />
     </>
   );
 }

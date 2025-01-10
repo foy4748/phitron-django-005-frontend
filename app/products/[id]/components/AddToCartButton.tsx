@@ -1,8 +1,10 @@
 "use client";
 import { addToCart } from "@/actions/cart/addToCart";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import { TAddToCartPayload } from "@/types/cart";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,10 +14,14 @@ const AddToCartButton = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [quantity, setQuantity] = useState(1);
+  const [isHidden, setIsHidden] = useState(false);
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
   const handleAddToCart = async () => {
+    toast({
+      title: "Adding item to cart....",
+    });
     // Checking if user is logged in
     if (!session?.user) {
       router.push(`/login?callbackUrl=${pathname}`);
@@ -26,21 +32,46 @@ const AddToCartButton = () => {
       quantity,
       product: Number(params.id),
     };
-    const res = await addToCart(payload);
-    console.log(res);
+    try {
+      const res = await addToCart(payload);
+      if (res) {
+        toast({
+          title: "Added Product to cart",
+        });
+        setIsHidden(true);
+      } else {
+        toast({
+          title: "FAILED to add Product to cart",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "FAILED to add Product to cart",
+      });
+    }
+    // console.log(res);
   };
+  if (!isHidden)
+    return (
+      <>
+        <div className="flex items-center gap-4">
+          <Button onClick={decrement} size={"sm"}>
+            -
+          </Button>
+          <span>{quantity}</span>
+          <Button onClick={increment} size={"sm"}>
+            +
+          </Button>
+        </div>
+        <Button onClick={handleAddToCart}>Add to Cart</Button>
+      </>
+    );
   return (
     <>
-      <div className="flex items-center gap-4">
-        <Button onClick={decrement} size={"sm"}>
-          -
-        </Button>
-        <span>{quantity}</span>
-        <Button onClick={increment} size={"sm"}>
-          +
-        </Button>
-      </div>
-      <Button onClick={handleAddToCart}>Add to Cart</Button>
+      <Link href={"/dashboard/user/cart"}>
+        <Button>Go To Cart</Button>
+      </Link>
     </>
   );
 };

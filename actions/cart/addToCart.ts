@@ -17,11 +17,15 @@ export const addToCart = async (payload: TAddToCartPayload) => {
       },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
-    revalidateTag("cartItems");
-    return data;
+    if (res.status == 201) {
+      const data = await res.json();
+      revalidateTag("cartItems");
+      return data;
+    } else {
+      return null;
+    }
   } catch (error) {
     console.log(error);
-    return { success: false, message: "Something went wrong" };
+    return null;
   }
 };

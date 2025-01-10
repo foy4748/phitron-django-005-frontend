@@ -23,11 +23,13 @@ export default async function WishList() {
                     </h1>
                     <p>Unit Price : {d.product.unit_price}</p>
                     <p>{d.product.description}</p>
-                    <Link href={`/products/${d.product.id}`}>
-                      {" "}
-                      <Button> Details </Button>
-                    </Link>
-                    <RemoveWishListButton wishlist_id={d.id} />
+                    <div className="space-x-4">
+                      <Link href={`/products/${d.product.id}`}>
+                        {" "}
+                        <Button> Details </Button>
+                      </Link>
+                      <RemoveWishListButton wishlist_id={d.id} />
+                    </div>
                   </div>
                 </Col>
                 <Col className="lg:col-span-6">
