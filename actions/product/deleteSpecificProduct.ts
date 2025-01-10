@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const deleteProduct = async (
@@ -22,6 +22,9 @@ export const deleteProduct = async (
       },
     });
     revalidateTag(`single-product-${id}`);
+    revalidatePath("/products");
+    revalidatePath("/dashboard/user/product-list");
+    revalidatePath("/dashboard/admin/product-list");
     return { success: true };
   } catch (error) {
     console.log(error);

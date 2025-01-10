@@ -1,7 +1,7 @@
 "use server";
 
 import { TProductPayload } from "@/types/product";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export const updateProduct = async (
@@ -26,6 +26,9 @@ export const updateProduct = async (
     });
     const data = await res.json();
     revalidateTag(`single-product-${id}`);
+    revalidatePath("/products");
+    revalidatePath("/dashboard/user/product-list");
+    revalidatePath("/dashboard/admin/product-list");
     return data;
   } catch (error) {
     console.log(error);

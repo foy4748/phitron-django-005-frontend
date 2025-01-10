@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
     ],
   },
   /* END of Image Related */
+  /* Loggin Related */
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 };
 
 export default nextConfig;

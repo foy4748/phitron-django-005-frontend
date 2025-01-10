@@ -29,6 +29,14 @@ export default function ProductPagination({ count, limit }: Props) {
             const current_params = new URLSearchParams(s);
             current_params.set("page", String(_ + 1));
             const queryStr = current_params.toString();
+            if (_ + 1 == 1)
+              return (
+                <PaginationItem key={idx}>
+                  <PaginationLink isActive={isActive} href={pathname}>
+                    {_ + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              );
             return (
               <PaginationItem key={idx}>
                 <PaginationLink

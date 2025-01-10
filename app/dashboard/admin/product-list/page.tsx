@@ -19,7 +19,7 @@ export default async function AdminProductListPage({
   return (
     <>
       <SearchAndFilterProduct />
-      <AdminProductListView columns={columns} data={data?.results} />
+      <AdminProductListView columns={columns} data={data?.results || []} />
       <ProductPagination count={data.count} limit={10} />
     </>
   );

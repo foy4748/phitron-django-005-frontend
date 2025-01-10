@@ -11,7 +11,7 @@ export const getProductList = async (
     const url = isAdminOnly
       ? `${S}/admin-specific/product-list`
       : isUserOnly
-      ? `${S}/user=specific/product-list`
+      ? `${S}/user-specific/product-list`
       : `${S}/product-list`;
     const params = new URLSearchParams(queryStr);
     const paramsObject = Object.fromEntries(params.entries());
@@ -25,11 +25,12 @@ export const getProductList = async (
     console.log("GET PRODCUT ACTION", fetchUrl);
     const res = await fetch(fetchUrl, {
       headers: {
-        ...(isAdminOnly && {
+        ...((isAdminOnly || isUserOnly) && {
           Authorization: `Token ${ck.get("token")?.value}`,
         }),
         "Content-Type": "application/json",
       },
+      cache: "force-cache",
       next: {
         tags,
       },
