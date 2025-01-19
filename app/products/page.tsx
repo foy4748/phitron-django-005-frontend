@@ -1,5 +1,4 @@
 import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
-import ProductCardGridUseClient from "./components/ProductCardGridUseClient";
 import ProductCardGrid from "./components/ProductCardGrid";
 import { ReadonlyURLSearchParams } from "next/navigation";
 

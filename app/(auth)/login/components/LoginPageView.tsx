@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/auth/loginUser";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const FormSchema = z.object({
@@ -34,6 +34,7 @@ const FormSchema = z.object({
 
 export default function LoginPageView() {
   const [, setLoading] = useState(false);
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -56,15 +57,32 @@ export default function LoginPageView() {
       ),
     });
     let callbackUrl = pathname.includes("login") ? "/" : pathname;
-    callbackUrl = searchParams.get("callbackUrl") || pathname;
+    callbackUrl = searchParams.get("callbackUrl") || callbackUrl;
     try {
       const d = await loginUser(data);
       if (d.success) {
         toast({
           title: "Logged In Successful. Redirecting",
         });
-        await signIn("credentials", { ...data, callbackUrl });
-        setLoading(false);
+        const result = await signIn("credentials", {
+          ...data,
+          redirect: false,
+        });
+        console.log(result);
+        if (result?.ok) {
+          router.push(callbackUrl);
+          setLoading(false);
+        } else {
+          toast({
+            title: "Authentication failed",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{result?.error}</code>
+              </pre>
+            ),
+          });
+          setLoading(false);
+        }
       } else {
         toast({
           title: "Authentication failed",
