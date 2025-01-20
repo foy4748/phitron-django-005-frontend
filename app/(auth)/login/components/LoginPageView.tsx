@@ -49,12 +49,7 @@ export default function LoginPageView() {
     setLoading(true);
     // Toaster
     toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: "Logging In...",
     });
     let callbackUrl = pathname.includes("login") ? "/" : pathname;
     callbackUrl = searchParams.get("callbackUrl") || callbackUrl;
