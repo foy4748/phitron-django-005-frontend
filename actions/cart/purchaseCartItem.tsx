@@ -7,7 +7,7 @@ export const purchaseCartItem = async () => {
   try {
     const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
     const ck = await cookies();
-    const res = await fetch(`${S}/purchase/`, {
+    const res = await fetch(`${S}/purchase/create-payment-intent/`, {
       credentials: "include",
       method: "POST",
       headers: {
@@ -17,6 +17,7 @@ export const purchaseCartItem = async () => {
     });
     const data = await res.json();
     revalidateTag("cartItems");
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error);
