@@ -1,5 +1,5 @@
 "use client";
-import { depositeCurrency } from "@/actions/profile/deposite/depositeCurrency";
+import { depositePaymentIntent } from "@/actions/profile/deposite/depositePaymentIntent";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { permanentRedirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -29,33 +30,36 @@ export function DepositeForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     try {
-      await depositeCurrency(values);
+      const { GatewayPageURL } = await depositePaymentIntent(values);
       // Toaster
       toast({
         title: "You submitted the following values:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Added Product Successfully</code>
+            <code className="text-white">Redirecting to payment page</code>
           </pre>
         ),
       });
+      console.log({ GatewayPageURL: GatewayPageURL });
+      // permanentRedirect(GatewayPageURL, "push");
+      window.location.href = GatewayPageURL;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
       // Toaster
       toast({
         title: "You submitted the following values:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-red-950 p-4">
-            <code className="text-white">Failed to Deposite Currency</code>
+            <code className="text-white">Failed to Deposite Currency!!</code>
           </pre>
         ),
       });
     }
-  }
+  };
   return (
     <>
       <Form {...form}>
