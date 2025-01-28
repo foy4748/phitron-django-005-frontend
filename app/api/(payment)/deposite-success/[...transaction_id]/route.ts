@@ -1,4 +1,5 @@
 import { depositeCurrency } from "@/actions/profile/deposite/depositeCurrency";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { NextRequest } from "next/server";
 
@@ -19,6 +20,8 @@ export const POST = async (
     amount: Number(transaction_id[1]),
   });
   console.log(result);
-  return redirect("/dashboard/user/info");
+  revalidateTag("balance");
+  revalidatePath("/dashboard/user/info");
+  redirect("/dashboard/user/info");
   // return NextResponse.json({ success: true });
 };

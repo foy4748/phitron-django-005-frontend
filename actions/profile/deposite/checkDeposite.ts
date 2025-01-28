@@ -13,7 +13,6 @@ export const checkDeposite = async () => {
         "Content-Type": "application/json",
       },
       next: {
-        revalidate: 30 * 1000,
         tags: ["balance"],
       },
     });

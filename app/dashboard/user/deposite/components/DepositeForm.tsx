@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { permanentRedirect } from "next/navigation";
+// import { permanentRedirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -45,10 +45,10 @@ export function DepositeForm() {
         ),
       });
       console.log({ GatewayPageURL: GatewayPageURL });
-      // permanentRedirect(GatewayPageURL, "push");
+      // permanentRedirect(GatewayPageURL);
       window.location.href = GatewayPageURL;
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
       // Toaster
       toast({
         title: "You submitted the following values:",
