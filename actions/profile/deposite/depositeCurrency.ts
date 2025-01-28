@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 
 export const depositeCurrency = async (payload: {
   amount: number | `${number}`;
+  transaction_id: string;
 }) => {
   try {
     const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;

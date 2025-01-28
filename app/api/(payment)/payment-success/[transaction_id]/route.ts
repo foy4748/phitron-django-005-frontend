@@ -7,7 +7,7 @@ type PropType = {
 };
 
 export const POST = async (
-  req: NextRequest,
+  _: NextRequest,
   { params }: { params: Promise<PropType> }
 ) => {
   // const body = await req.json();
