@@ -1,3 +1,4 @@
+import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import Col from "@/components/customUI/GridSystem/Col";
 import { ReadonlyURLSearchParams } from "next/navigation";
@@ -6,6 +7,7 @@ import ProductCard from "@/app/products/components/ProductCard";
 import CategoryTitle from "@/app/products/components/CategoryTitle";
 import { TProductList } from "@/types/product";
 import ProductPagination from "@/app/products/components/Pagination";
+import { cn } from "@/lib/utils";
 
 // Product Fetch Func
 
@@ -25,20 +27,34 @@ export default async function ProductCardGrid({
   const product_list: TProductList = await getProductList(queryStr);
   return (
     <>
-      <h1 className="my-4">
-        <CategoryTitle className="text-4xl" />
-      </h1>
-      <GridSystem>
-        {Array.isArray(product_list?.results) &&
-          product_list?.results?.map((p, idx) => {
-            return (
-              <Col key={idx}>
-                <ProductCard data={p} />
-              </Col>
-            );
-          })}
-      </GridSystem>
-      <ProductPagination count={product_list.count} limit={params.limit} />
+      <section>
+        <div
+          className={`flex ${cn({
+            "justify-between": product_list.count > (params.limit || 12),
+            "justify-end": product_list.count <= (params.limit || 12),
+          })} bg-white dark:bg-blend-darken mt-4 sticky top-0`}
+        >
+          <ProductPagination
+            className="justify-start"
+            count={product_list.count}
+            limit={params.limit}
+          />
+          <SearchAndFilterProduct />
+        </div>
+        <h1 className="my-4">
+          <CategoryTitle className="text-4xl" />
+        </h1>
+        <GridSystem>
+          {Array.isArray(product_list?.results) &&
+            product_list?.results?.map((p, idx) => {
+              return (
+                <Col key={idx}>
+                  <ProductCard data={p} />
+                </Col>
+              );
+            })}
+        </GridSystem>
+      </section>
     </>
   );
 }

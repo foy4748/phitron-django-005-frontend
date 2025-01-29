@@ -5,6 +5,7 @@ import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilte
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { TProductList } from "@/types/product";
 import ProductPagination from "@/app/products/components/Pagination";
+import { cn } from "@/lib/utils";
 
 export default async function UserProductListPage({
   searchParams,
@@ -18,9 +19,22 @@ export default async function UserProductListPage({
   const data: TProductList = await getProductList(queryStr, false, true);
   return (
     <>
-      <SearchAndFilterProduct />
-      <UserProductListView columns={columns} data={data?.results || []} />
-      <ProductPagination count={data.count} limit={10} />
+      <section>
+        <div
+          className={`flex ${cn({
+            "justify-between": data.count > (params.limit || 10),
+            "justify-end": data.count <= (params.limit || 10),
+          })} bg-white my-4 sticky top-0 z-10`}
+        >
+          <ProductPagination
+            className="justify-start"
+            count={data.count}
+            limit={10}
+          />
+          <SearchAndFilterProduct />
+        </div>
+        <UserProductListView columns={columns} data={data?.results || []} />
+      </section>
     </>
   );
 }

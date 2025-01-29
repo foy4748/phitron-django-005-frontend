@@ -19,7 +19,7 @@ const Navbar = () => {
   const isActive = (route: string) =>
     pathname.startsWith(route) ? "text-primary" : "";
   return (
-    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl mt-5 w-full">
+    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl w-full">
       {/* ICON */}
       <figure className="flex justify-start">
         <Link href="/">

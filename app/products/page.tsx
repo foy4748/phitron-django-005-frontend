@@ -1,4 +1,3 @@
-import { SearchAndFilterProduct } from "@/app/products/components/SearchAndFilterProduct";
 import ProductCardGrid from "./components/ProductCardGrid";
 import { ReadonlyURLSearchParams } from "next/navigation";
 
@@ -14,9 +13,6 @@ export default async function ProductCardPage({
 }) {
   return (
     <>
-      <div className="flex justify-end mt-4">
-        <SearchAndFilterProduct />
-      </div>
       <ProductCardGrid searchParams={searchParams} />
     </>
   );

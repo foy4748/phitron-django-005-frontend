@@ -12,6 +12,7 @@ import "@smastrom/react-rating/style.css";
 import { Toaster } from "@/components/ui/toaster";
 import NextAuthSessionProvider from "@/lib/Providers/NextAuthSessionProvider";
 import NavBar from "@/components/customUI/NavBar";
+import Banner from "./home/components/Banner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className={geistSans.className}>
         <NextAuthSessionProvider>
           <NavBar />
+          <Banner />
           <main className="px-2 md:px-4 mx-auto"> {children}</main>
           <Toaster />
         </NextAuthSessionProvider>
