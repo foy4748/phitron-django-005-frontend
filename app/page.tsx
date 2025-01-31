@@ -7,11 +7,11 @@ export default async function Home() {
   return (
     <section>
       <CategoryList />
+      <FeaturedProducts />
       <div className="space-y-8">
         <Hero1 />
         <Hero2 />
       </div>
-      <FeaturedProducts />
     </section>
   );
 }

@@ -25,6 +25,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "chaldn.com",
       },
+      {
+        protocol: "https",
+        hostname: "sandbox.sslcommerz.com",
+      },
     ],
   },
   /* END of Image Related */

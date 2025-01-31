@@ -1,12 +1,19 @@
 import Col from "@/components/customUI/GridSystem/Col";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
 import { Skeleton } from "@/components/ui/skeleton";
-const Loading = ({ cardsNumber }: { cardsNumber?: number }) => {
+import { cn } from "@/lib/utils";
+const Loading = ({
+  cardsNumber,
+  className,
+}: {
+  cardsNumber?: number;
+  className?: string;
+}) => {
   const repeat = (arr: number[], n: number) =>
     Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
   return (
     <>
-      <GridSystem className="gap-y-8">
+      <GridSystem className={cn("gap-y-8", className)}>
         {repeat(Array.from(Array(cardsNumber || 12).keys()), 1).map(
           (_, idx) => (
             <Col key={idx} className="flex justify-center">

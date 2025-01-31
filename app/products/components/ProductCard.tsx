@@ -20,8 +20,8 @@ export default function ProductCard({ data }: { data: TSingleProduct }) {
           <Image
             src={data.image_url}
             alt={`${data.product_name} by ${data.product_owner}`}
-            width={300}
-            height={300}
+            width={120}
+            height={120}
             className="w-full h-full object-scale-down"
           />
         </figure>

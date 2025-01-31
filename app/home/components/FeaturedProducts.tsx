@@ -31,55 +31,62 @@ export default function FeaturedProducts() {
         setIsloading(false);
       });
   }, []);
-  if (isLoading) return <Loading cardsNumber={3} />;
+  if (isLoading)
+    return (
+      <section className="flex justify-center">
+        <Loading className="my- 12 lg:my-24" cardsNumber={4} />
+      </section>
+    );
   return (
     <>
-      <h2 className="text-2xl font-bold mt-8 mb-2">Featured Products</h2>
-      <Swiper
-        // install Swiper modules
-        modules={[Navigation, Scrollbar, A11y, Autoplay, FreeMode]}
-        spaceBetween={25}
-        breakpoints={{
-          640: {
-            slidesPerView: 1,
-          },
-          768: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-          1280: {
-            slidesPerView: 4,
-          },
-          1536: {
-            slidesPerView: 5,
-          },
-          1854: {
-            slidesPerView: 6,
-          },
-        }}
-        autoplay={{
-          delay: 1800,
-        }}
-        freeMode={{
-          enabled: true,
-          sticky: false,
-        }}
-        pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
-        className="h-auto flex items-center"
-      >
-        {data &&
-          Array.isArray(data) &&
-          data?.map((d) => {
-            return (
-              <SwiperSlide key={d.id}>
-                <ProductCard data={d} />
-              </SwiperSlide>
-            );
-          })}
-      </Swiper>
+      <section className="my-12 lg:my-24">
+        <h2 className="text-2xl font-bold mt-8 mb-2">Featured Products</h2>
+        <Swiper
+          // install Swiper modules
+          modules={[Navigation, Scrollbar, A11y, Autoplay, FreeMode]}
+          spaceBetween={25}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+            },
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+            1280: {
+              slidesPerView: 4,
+            },
+            1536: {
+              slidesPerView: 5,
+            },
+            1854: {
+              slidesPerView: 6,
+            },
+          }}
+          autoplay={{
+            delay: 1800,
+          }}
+          freeMode={{
+            enabled: true,
+            sticky: false,
+          }}
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          className="h-auto flex items-center"
+        >
+          {data &&
+            Array.isArray(data) &&
+            data?.map((d) => {
+              return (
+                <SwiperSlide key={d.id}>
+                  <ProductCard data={d} />
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>
+      </section>
     </>
   );
 }
