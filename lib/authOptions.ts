@@ -56,6 +56,7 @@ const authOptions: AuthOptions = {
         token.last_name = user?.last_name ? String(user?.last_name) : "";
         token.phone_no = user?.phone_no ? String(user?.phone_no) : "";
         token.isAdmin = Boolean(user?.isAdmin);
+        token.expire_login = String(user?.expire_login);
       }
       return token;
     },
@@ -74,6 +75,7 @@ const authOptions: AuthOptions = {
         : null;
       session.user.phone_no = token?.phone_no ? String(token?.phone_no) : null;
       session.user.isAdmin = Boolean(token?.isAdmin);
+      session.user.expire_login = String(token?.expire_login);
       return session;
     },
   },

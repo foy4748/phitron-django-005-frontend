@@ -47,7 +47,7 @@ export default function Footer() {
                 </Link>
               </figure>
               <article className="space-y-4">
-                <div class="footer-section">
+                <div className="footer-section">
                   <h3 className="font-bold">Freshness Delivered Daily</h3>
                   <p className="text-justify">
                     Discover the freshest produce, dairy, and more at unbeatable

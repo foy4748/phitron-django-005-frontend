@@ -13,6 +13,7 @@ declare module "next-auth" {
     phone_no: string | null | undefined;
     email: string;
     isAdmin: boolean;
+    expire_login: string | number | Date;
   }
 
   interface Session {
@@ -30,5 +31,6 @@ declare module "next-auth/jwt" {
     phone_no: string;
     email: string;
     isAdmin: boolean;
+    expire_login: string | number | Date;
   }
 }
