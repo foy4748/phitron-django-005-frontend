@@ -12,17 +12,14 @@ export default async function midddleware(req: NextRequest) {
   const isAdminRelatedRoute =
     req.nextUrl.pathname.startsWith("/dashboard/admin");
   const isAdmin = token?.isAdmin;
+  const isLoginExpired =
+    (token?.expire_login && isNaN(new Date(token.expire_login).getTime())) ||
+    new Date() > new Date(String(token?.expire_login));
 
-  // // Checking Session Expire
-  const expire_login = new Date(String(token?.expire_login));
-  const now = new Date();
-  if (now > expire_login)
-    return NextResponse.rewrite(new URL("/login", req.url));
-
-  if (isAdminRelatedRoute && !isAdmin) {
+  if (isAdminRelatedRoute && (!isAdmin || isLoginExpired)) {
     return NextResponse.rewrite(new URL("/login", req.url));
   }
-  if (isDashboard && !token) {
+  if (isDashboard && (!token || isLoginExpired)) {
     return NextResponse.rewrite(new URL("/login", req.url));
   }
   return NextResponse.next();

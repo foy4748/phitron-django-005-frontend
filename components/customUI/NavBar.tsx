@@ -9,15 +9,29 @@ import { Menu, Sprout } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import LogOut from "../LogOut";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const isActive = (route: string) =>
     pathname.startsWith(route) ? "text-primary" : "";
+  // If Token expires, hit logout from frontEnd as well.
+  useEffect(() => {
+    const token = session?.user;
+    const isLoginExpired =
+      (token?.expire_login && isNaN(new Date(token.expire_login).getTime())) ||
+      new Date() > new Date(String(token?.expire_login));
+
+    if (isLoginExpired) {
+      signOut().then(() => {
+        console.log("HIT");
+      });
+    }
+  }, [session?.user]);
   return (
     <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl w-full">
       {/* ICON */}
