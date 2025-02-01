@@ -61,7 +61,9 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <DeleteProductButton product_id={row.original.id} />
+          <div className="text-center">
+            <DeleteProductButton product_id={row.original.id} />
+          </div>
         </>
       );
     },
@@ -71,7 +73,9 @@ export const columns: ColumnDef<TSingleProduct>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <ProductUpdateModal product_id={row.original.id} />
+          <div className="text-center">
+            <ProductUpdateModal product_id={row.original.id} />
+          </div>
         </>
       );
     },

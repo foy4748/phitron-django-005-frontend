@@ -3,6 +3,7 @@ import { deleteProduct } from "@/actions/product/deleteSpecificProduct";
 import { toast } from "@/hooks/use-toast";
 import { Dispatch, SetStateAction } from "react";
 import { usePathname } from "next/navigation";
+import { OctagonX } from "lucide-react";
 type PropTypes = {
   product_id: number | `${number}`;
   setIsDialogOpen?: Dispatch<SetStateAction<boolean>>;
@@ -53,9 +54,11 @@ export default function DeleteProductButton({
       <Button
         type="button"
         variant={"destructive"}
+        size={"icon"}
+        className="rounded-full"
         onClick={() => handleDelete(Number(String(product_id)))}
       >
-        Delete Product
+        <OctagonX />
       </Button>
     </>
   );

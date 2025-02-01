@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { NotebookPen } from "lucide-react";
 import { useState } from "react";
 
 export function ProductUpdateModal({
@@ -21,7 +22,9 @@ export function ProductUpdateModal({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Update Product</Button>
+        <Button variant="outline" size={"icon"} className="rounded-full">
+          <NotebookPen />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -43,7 +43,10 @@ export default function RootLayout({
         <NextAuthSessionProvider>
           <NavBar />
           <Banner />
-          <main className="px-2 md:px-4 mx-auto"> {children}</main>
+          <main className="px-2 md:px-8 mx-auto max-w-[1400px]">
+            {" "}
+            {children}
+          </main>
           <Footer />
           <Toaster />
         </NextAuthSessionProvider>
