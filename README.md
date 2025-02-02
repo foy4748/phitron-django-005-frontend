@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Intro
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" width="40"  style="background-color:#fff;border-radius:25%;padding:5px" alt="nextjs logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="40" width="40" alt="django logo"  style="background-color:#fff;border-radius:25%;padding:5px" />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" width="40"  style="background-color:#fff;border-radius:25%;padding:5px" alt="postgresql logo"  />
+</div>
+
+###
+
+
+In this project, I've tried to maintain `DRY` and clean code as much as possible. Created `Highly Re-usable Components` on the FrontEnd/NextJS, on the other hand, used `Class-Based Views` on BackEnd/DRF. Tried to avoid additional packages or library as much as possible, since I'm using Two Frameworks, one on the FrontEnd and another on the BackEnd 😅. Used their native solutions to implement necessary features.
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).    
+
+## Resources
+
+| Name         | Link                                                                                                                |
+|-------------------|---------------------------------------------------------------------------------------------------------------------|
+| FrontEnd Repo     | **[GitHub ↗ ](https://github.com/foy4748/phitron-django-005-frontend)**
+| BackEnd Repo      | **[GitHub ↗ ](https://github.com/foy4748/phitron-django-005)**
+| Requirements      | **[Notion ↗ ](https://screeching-plough-4fd.notion.site/Final-Assignment-sdt-assignment-05-1390adbafc6c80b0a057cee72b3419b3?pvs=4)**
+| API Documentation | **[POSTMAN ↗ ](https://documenter.getpostman.com/view/14857923/2sAYBbf9su)**
 
 ## Getting Started
+First, navigate to project root folder using command line. Install the necessary packages by running:
+```bash
+pnpm install
+```
 
-First, run the development server:
+This project uses `pnpm` as package manager
+
+Then, run the development server:
 
 ```bash
-npm run dev
+pnpm dev
+```
+```bash
 # or
 yarn dev
+```
+```bash
 # or
-pnpm dev
+npm run dev
+```
+```bash
 # or
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Documentation
+- **[POSTMAN Document Page ↗](https://documenter.getpostman.com/view/14857923/2sAYBbf9su)**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables [ Example ]
 
-## Learn More
+You may start by copying the `env.example` file into `.env.local` file. Content of `env.example` file
 
-To learn more about Next.js, take a look at the following resources:
+```
+SERVER_ADDRESS=http://localhost:3001
+NEXT_PUBLIC_SERVER_ADDRESS=http://localhost:3001
+NEXTAUTH_URL=http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Production
+# SERVER_ADDRESS=https://phitron-sdt-assignment-05.vercel.app
+# NEXT_PUBLIC_SERVER_ADDRESS=https://phitron-sdt-assignment-05.vercel.app
+# NEXTAUTH_URL=https://phitron-sdt-assignment-05-frontend.vercel.app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+NEXTAUTH_SECRET=TEST_SECRET
+IMG_BB_KEY=img_bb_secret_key
+```
 
-## Deploy on Vercel
+## Technologies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### FrontEnd
+- NextJS (TypeScript)
+- NextAuth
+- TailwindCSS
+- ShadCN
+- React Hook Form
+- Zod
+- SSLCommerze (Payment Gateway)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### Strategies
+- Used NextJS built-in `fetch` function to perform network requests to Django to utilize the native `Caching System` of NextJS
+- Most of the components are `Server Component`. Kept the number of `Client Component` as minimum as possible.
+- Most of the data fetching is done using `Server Actions`.
+- Re-used `CREATE` forms for `UPDATE` as well.
+- `ProductPagination` and `ProductSearch` form are highly re-usable components. These are used on `ListView` pages such as - Product List Pages for Any User, or User/Admin dashboard.
+- Used `NextAuth` to handle Authentication as well as Authorization using the `middleware.ts` file.
+
+### BackEnd
+- Django (Python)
+- Django Rest Framework (DRF)
+- PostgreSQL (on Vercel/NeonDB)
+- SSLCommerze-Lib (Payment Gateway)
+
+#### Strategies
+- Used `Class-Based Views` as much as possible to write simple CRUD API endpoints
+- Utilized Built-in solutions in Django REST Framework (aka DRF) for - Pagination, Search and Filter functionalites for Product.
+- Wrote a Python script in the `scripts/populate_product_data.py` file to generate `Test Random Product` data to populate the Database to check whether everyting works or not.
+- Used `Transaction & Rollback` to handle product purchase, since it performs delete operations on the `CartItem` and inserts data in the `PurchasedItem` model, as well as creates a `Transaction` model instance to keep the payment record.
+
+### Deployments
+- FrontEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05.vercel-frontend.app)**
+- BackEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05.vercel.app)**
+
+### Deployment Guide
+
+Just run the command below to deploy the app on vercel
+```bash
+vercel --prod
+```

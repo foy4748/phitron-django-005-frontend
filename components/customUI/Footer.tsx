@@ -58,8 +58,8 @@ export default function Footer() {
                   <h3 className="font-bold">Your One-Stop Grocery Shop</h3>
                   <p className="text-justify">
                     From farm-fresh fruits and vegetables to pantry staples,
-                    we've got everything you need. Start your shopping journey
-                    with us today!
+                    we&apos;ve got everything you need. Start your shopping
+                    journey with us today!
                   </p>
                 </div>
               </article>
