@@ -14,6 +14,7 @@ import NextAuthSessionProvider from "@/lib/Providers/NextAuthSessionProvider";
 import NavBar from "@/components/customUI/NavBar";
 import Banner from "./home/components/Banner";
 import Footer from "@/components/customUI/Footer";
+import Notification from "@/components/customUI/Notification";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -49,6 +50,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster />
+          <Notification />
         </NextAuthSessionProvider>
       </body>
     </html>

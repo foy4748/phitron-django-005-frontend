@@ -25,6 +25,6 @@ export const POST = async (
   // const result = await res.json();
   const result = await res.json();
   console.log(result);
-  return redirect("/dashboard/user/purchase-history");
+  return redirect("/dashboard/user/purchase-history?payment-succeed=1");
   // return NextResponse.json({ success: true });
 };

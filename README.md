@@ -1,11 +1,11 @@
 # Intro
 
 <div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" width="40"  style="background-color:#fff;border-radius:25%;padding:5px" alt="nextjs logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" width="40"  style="background-color:#ffffff;border-radius:25%;padding:5px" alt="nextjs logo"  />
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="40" width="40" alt="django logo"  style="background-color:#fff;border-radius:25%;padding:5px" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="40" width="40" alt="django logo"  style="background-color:#ffffff;border-radius:25%;padding:5px" alt="django logo"/>
   <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" width="40"  style="background-color:#fff;border-radius:25%;padding:5px" alt="postgresql logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" width="40"  style="background-color:#ffffff;border-radius:25%;padding:5px" alt="postgresql logo"  />
 </div>
 
 ###
@@ -25,7 +25,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | API Documentation | **[POSTMAN ↗ ](https://documenter.getpostman.com/view/14857923/2sAYBbf9su)**
 
 ## Getting Started
-First, navigate to project root folder using command line. Install the necessary packages by running:
+After cloning this repo, first, navigate to project root folder using command line. 
+
+```bash
+cd phitron-django-005-frontend
+```
+
+Install the necessary packages by running:
+
 ```bash
 pnpm install
 ```
@@ -51,6 +58,17 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Test Credentials
+
+**Already set as default values on Login Form**
+
+```json
+{
+    "username":  "test",
+    "password":  "TestTest$1"
+}
+```
 
 ## API Documentation
 - **[POSTMAN Document Page ↗](https://documenter.getpostman.com/view/14857923/2sAYBbf9su)**
