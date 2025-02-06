@@ -5,7 +5,6 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
-import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 

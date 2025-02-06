@@ -1,11 +1,10 @@
 import Col from "@/components/customUI/GridSystem/Col";
 import GridSystem from "@/components/customUI/GridSystem/GridSystem";
-import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@radix-ui/react-dropdown-menu";
+import { Label } from "@/components/ui/label";
 
 export default function ContactUsForm() {
   return (

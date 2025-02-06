@@ -29,7 +29,6 @@ import { toast } from "@/hooks/use-toast";
 import useCategory from "@/hooks/useCategory";
 import { getSpecifcProduct } from "@/actions/product/getSpecificProduct";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import DeleteProductButton from "../../[id]/components/DeleteProductButton";
 import { uploadPhoto } from "@/actions/uploadPhoto";
 import { usePathname, useRouter } from "next/navigation";
 import { Loading } from "@/app/dashboard/loading";

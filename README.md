@@ -24,6 +24,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | Requirements      | **[Notion ↗ ](https://screeching-plough-4fd.notion.site/Final-Assignment-sdt-assignment-05-1390adbafc6c80b0a057cee72b3419b3?pvs=4)**
 | API Documentation | **[POSTMAN ↗ ](https://documenter.getpostman.com/view/14857923/2sAYBbf9su)**
 
+---
+
+### Deployments
+- FrontEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05-frontend.vercel.app)**
+- BackEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05.vercel.app)**
+
+---
+
 ## Getting Started
 After cloning this repo, first, navigate to project root folder using command line. 
 
@@ -122,9 +130,6 @@ IMG_BB_KEY=img_bb_secret_key
 - Wrote a Python script in the `scripts/populate_product_data.py` file to generate `Test Random Product` data to populate the Database to check whether everyting works or not.
 - Used `Transaction & Rollback` to handle product purchase, since it performs delete operations on the `CartItem` and inserts data in the `PurchasedItem` model, as well as creates a `Transaction` model instance to keep the payment record.
 
-### Deployments
-- FrontEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05.vercel-frontend.app)**
-- BackEnd - **[Vercel ↗ ](https://phitron-sdt-assignment-05.vercel.app)**
 
 ### Deployment Guide
 
