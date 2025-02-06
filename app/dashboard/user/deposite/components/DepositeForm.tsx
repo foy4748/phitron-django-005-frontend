@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  amount: z.coerce.number(),
+  amount: z.coerce.number().min(10),
 });
 
 export function DepositeForm() {
@@ -26,7 +26,7 @@ export function DepositeForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      amount: 0,
+      amount: 10,
     },
   });
 

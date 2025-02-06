@@ -15,6 +15,7 @@ import NavBar from "@/components/customUI/NavBar";
 import Banner from "./home/components/Banner";
 import Footer from "@/components/customUI/Footer";
 import Notification from "@/components/customUI/Notification";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -50,7 +51,9 @@ export default function RootLayout({
           </main>
           <Footer />
           <Toaster />
-          <Notification />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Notification />
+          </Suspense>
         </NextAuthSessionProvider>
       </body>
     </html>

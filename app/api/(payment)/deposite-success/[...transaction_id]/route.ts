@@ -22,6 +22,6 @@ export const POST = async (
   console.log(result);
   revalidateTag("balance");
   revalidatePath("/dashboard/user/info");
-  redirect("/dashboard/user/info");
+  redirect("/dashboard/user/info?payment-succeed=1");
   // return NextResponse.json({ success: true });
 };

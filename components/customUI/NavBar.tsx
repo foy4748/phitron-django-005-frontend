@@ -28,19 +28,19 @@ const Navbar = () => {
 
     if (isLoginExpired) {
       signOut().then(() => {
-        console.log("HIT");
+        console.log("Logged Out");
       });
     }
   }, [session?.user]);
   return (
-    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-3 gap-6 rounded-2xl w-full">
+    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-6 gap-6 rounded-2xl w-full">
       {/* ICON */}
       <figure className="flex justify-start">
         <Link href="/">
           <Sprout className={pathname == "/" ? "text-primary" : "opacity-0"} />
         </Link>
       </figure>
-      <ul className="hidden md:flex justify-center items-center gap-10 text-card-foreground">
+      <ul className="hidden md:flex justify-center items-center gap-10 text-card-foreground md:col-span-4">
         <li className={`font-medium ${pathname == "/" ? "text-primary" : ""}`}>
           <Link href="/">Home</Link>
         </li>
@@ -52,6 +52,9 @@ const Navbar = () => {
             <Link href="/dashboard">Dashboard</Link>
           </li>
         )}
+        <li className={isActive("/contact-us")}>
+          <Link href="/contact-us">Contact Us</Link>
+        </li>
       </ul>
 
       <div className="flex items-center justify-end">
@@ -92,21 +95,34 @@ const Navbar = () => {
               <DropdownMenuItem>
                 <Link href="/products">Products</Link>
               </DropdownMenuItem>
+              {session?.user && (
+                <DropdownMenuItem>
+                  <Link href="/dashboard">Dashboard</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem>
-                <Link href="/dashboard">Dashboard</Link>
+                <Link href="/contact-us">Contact Us</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/register">
-                  <Button variant="secondary" className="w-full text-sm">
-                    Register
-                  </Button>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href="/login">
-                  <Button className="w-full text-sm">Login</Button>
-                </Link>
-              </DropdownMenuItem>
+              {session?.user ? (
+                <DropdownMenuItem>
+                  <LogOut variant="secondary" className=" px-2" />
+                </DropdownMenuItem>
+              ) : (
+                <>
+                  <DropdownMenuItem>
+                    <Link href="/register">
+                      <Button variant="secondary" className="w-full text-sm">
+                        Register
+                      </Button>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/login">
+                      <Button className="w-full text-sm">Login</Button>
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
