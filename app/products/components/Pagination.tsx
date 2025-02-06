@@ -16,11 +16,11 @@ type Props = {
 };
 
 export default function ProductPagination({ count, limit, className }: Props) {
-  const linkOnClick = () => {
-    toast({
-      title: "Loading...",
-    });
-  };
+  // const linkOnClick = () => {
+  //   toast({
+  //     title: "Loading...",
+  //   });
+  // };
   const pages = Math.ceil(Number(count) / (Number(limit) || 1));
   const repeat = (arr: number[], n: number) =>
     Array.from({ length: arr.length * n }, (_, i) => arr[i % arr.length]);
@@ -39,14 +39,14 @@ export default function ProductPagination({ count, limit, className }: Props) {
             const queryStr = current_params.toString();
             if (_ + 1 == 1)
               return (
-                <PaginationItem key={idx} onClick={linkOnClick}>
+                <PaginationItem key={idx}>
                   <PaginationLink isActive={isActive} href={pathname}>
                     {_ + 1}
                   </PaginationLink>
                 </PaginationItem>
               );
             return (
-              <PaginationItem key={idx} onClick={linkOnClick}>
+              <PaginationItem key={idx}>
                 <PaginationLink
                   isActive={isActive}
                   href={`${pathname}?${queryStr}`}

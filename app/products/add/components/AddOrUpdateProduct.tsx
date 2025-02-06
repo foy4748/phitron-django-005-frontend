@@ -80,13 +80,13 @@ export default function AddOrUpdateProduct({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product_name: "",
+      product_name: undefined,
       image: undefined,
-      image_url: "",
-      category: 0,
-      unit_price: 1,
-      unit_name: "",
-      description: "",
+      image_url: undefined,
+      category: undefined,
+      unit_price: undefined,
+      unit_name: undefined,
+      description: undefined,
     },
     mode: "all",
   });
@@ -313,12 +313,6 @@ export default function AddOrUpdateProduct({
           )}
         />
         <Button type="submit">Submit</Button>
-        {editMode && (
-          <DeleteProductButton
-            product_id={Number(String(product_id))}
-            setIsDialogOpen={setIsDialogOpen}
-          />
-        )}
       </form>
     </Form>
   );
