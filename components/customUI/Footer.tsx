@@ -34,7 +34,7 @@ export default function Footer() {
   if (!pathname.startsWith("/dashboard"))
     return (
       <>
-        <GridSystem className="max-w-[1400px] mx-auto bg-green-900 px-20 py-10 text-white gap-x-10 mt-24">
+        <GridSystem className="max-w-[1400px] mx-auto bg-green-900 px-20 py-10 text-white md:gap-x-10 mt-24">
           <Col className="flex justify-center">
             <section>
               <figure className="flex justify-start mb-3">
@@ -121,7 +121,7 @@ export default function Footer() {
                     href="https://www.linkedin.com/in/foy4748/"
                     target="_blank"
                   >
-                    <Linkedin className="me-4" />
+                    <Linkedin className="me-4 box-content border rounded-md p-[5px]" />
                     LinkedIn
                   </a>
                 </li>
@@ -131,7 +131,7 @@ export default function Footer() {
                     href="https://www.github.com/foy4748"
                     target="_blank"
                   >
-                    <Github className="me-4" />
+                    <Github className="me-4 box-content border rounded-md p-[5px]" />
                     GitHub
                   </a>
                 </li>
@@ -141,7 +141,7 @@ export default function Footer() {
                     href="https://www.facebook.com/faisal.rahman.4748/"
                     target="_blank"
                   >
-                    <Facebook className="me-4" />
+                    <Facebook className="me-4 box-content border rounded-md p-[5px]" />
                     Facebook
                   </a>
                 </li>
