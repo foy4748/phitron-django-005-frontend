@@ -150,3 +150,14 @@ body {
 .swiper-slide {
   height: auto;
 }
+
+.small-card-btn {
+  opacity: 0;
+  transform: translate(-20px, 20px);
+}
+
+.small-card-btn-container:hover .small-card-btn {
+  transition: all 700ms;
+  opacity: 1;
+  transform: translate(20px, -20px);
+}

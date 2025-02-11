@@ -33,6 +33,7 @@ export default function Banner() {
           slidesPerView={1}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
+          autoplay
           className="h-auto flex items-center"
         >
           <SwiperSlide>
