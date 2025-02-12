@@ -7,7 +7,7 @@ import UpdateCartItemQuantity from "./components/UpdateCartItemQuantity";
 import { DeleteCartItem } from "./components/DeleteCartItem";
 import { PurchaseButton } from "./components/PurchaseButton";
 
-const getCartItems = async () => {
+export const getCartItems = async () => {
   const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
   const ck = await cookies();
   const res = await fetch(`${S}/cart/cart-item-list/`, {
