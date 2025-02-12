@@ -42,7 +42,7 @@ export default async function CategoryGrid() {
                 className="w-full"
               >
                 <CategoryImageCard
-                  src={`/images/category-cards/${idx + 1}.jfif`}
+                  src={`/images/category-cards/${idx + 1}.png`}
                 />
                 <article className="absolute bottom-4 w-full text-center">
                   <p>{cateogry.category}</p>

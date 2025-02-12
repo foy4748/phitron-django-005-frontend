@@ -55,6 +55,9 @@ const Navbar = () => {
         <li className={isActive("/contact-us")}>
           <Link href="/contact-us">Contact Us</Link>
         </li>
+        <li className={isActive("/about-us")}>
+          <Link href="/about-us">About Us</Link>
+        </li>
       </ul>
 
       <div className="flex items-center justify-end">
@@ -102,6 +105,9 @@ const Navbar = () => {
               )}
               <DropdownMenuItem>
                 <Link href="/contact-us">Contact Us</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/about-us">About Us</Link>
               </DropdownMenuItem>
               {session?.user ? (
                 <DropdownMenuItem>
