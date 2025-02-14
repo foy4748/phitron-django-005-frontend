@@ -13,6 +13,11 @@ import { signOut, useSession } from "next-auth/react";
 import LogOut from "../LogOut";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import {
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@radix-ui/react-dropdown-menu";
+import Image from "next/image";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -63,12 +68,46 @@ const Navbar = () => {
       <div className="flex items-center justify-end">
         {session?.user ? (
           <>
-            <a href="#">
-              <LogOut variant="secondary" className="hidden md:block px-2" />
-            </a>
             <Link href="/dashboard">
               <Button className="hidden md:block ml-2 mr-2">Dashboard</Button>
             </Link>
+            {/* User Avatar Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="h-full mx-2">
+                <Image
+                  className="h-full rounded-full object-cover outline outline-slate-400"
+                  src={
+                    session?.user?.image_url ||
+                    "https://i.ibb.co.com/Nnt2N26/user-placeholder.png"
+                  }
+                  height={25}
+                  width={25}
+                  alt={"Logged In user Avatar"}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="p-2">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href={"/dashboard/user/cart"}>Cart</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={"/dashboard/user/info"}>Balance</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={"/dashboard/user/wish-list"}>WishList</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/dashboard">
+                    <Button size={"sm"}>Dashboard</Button>
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem>
+                  <LogOut variant="secondary" className=" px-2" />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </>
         ) : (
           <>
@@ -92,37 +131,37 @@ const Navbar = () => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href="/">Home</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href="/products">Products</Link>
               </DropdownMenuItem>
               {session?.user && (
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href="/contact-us">Contact Us</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href="/about-us">About Us</Link>
               </DropdownMenuItem>
               {session?.user ? (
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <LogOut variant="secondary" className=" px-2" />
                 </DropdownMenuItem>
               ) : (
                 <>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/register">
                       <Button variant="secondary" className="w-full text-sm">
                         Register
                       </Button>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/login">
                       <Button className="w-full text-sm">Login</Button>
                     </Link>

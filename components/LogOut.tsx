@@ -35,6 +35,7 @@ export default function LogOut({
   return (
     <>
       <Button
+        size={"sm"}
         variant={variant}
         className={cn(`${className}`)}
         onClick={handleLogout}
