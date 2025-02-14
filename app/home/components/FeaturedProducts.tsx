@@ -74,7 +74,7 @@ export default function FeaturedProducts() {
           }}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          className="h-auto flex items-center"
+          className="h-auto flex items-center py-10"
         >
           {data &&
             Array.isArray(data) &&

@@ -67,6 +67,14 @@ export default function CheckoutPage() {
               </div>
             </div>
             <div className="space-y-2">
+              <Label htmlFor="name">Phone/Mobile No</Label>
+              <Input
+                required
+                id="phone"
+                placeholder="For example: +880171717171"
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="address">Address</Label>
               <Textarea
                 required

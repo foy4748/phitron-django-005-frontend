@@ -38,7 +38,7 @@ export default async function FeaturedProducts2() {
                 <>
                   <Col
                     className="w-full col-span-4 md:col-span-4 lg:col-span-4 flex justify-center items-center border relative small-card-btn-container overflow-hidden"
-                    key={prod.id + idx}
+                    key={`${prod.id} ${idx} ${JSON.stringify(new Date())}`}
                   >
                     <div className="absolute w-full h-full z-10 top-0 transition-opacity duration-300 hover:bg-gradient-to-b from-slate-50/10 to-slate-800/90 hover:bg-opacity-10">
                       <Link href={`/products/${prod.id}`}>
