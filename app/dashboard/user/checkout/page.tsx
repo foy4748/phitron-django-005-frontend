@@ -20,9 +20,16 @@ import { Button } from "@/components/ui/button";
 
 export default function CheckoutPage() {
   const [data, setData] = useState<TCartItem[]>([]);
+  const [totalCost, setTotalCost] = useState<number>(0);
   useEffect(() => {
-    getCartItems().then((d) => {
+    getCartItems().then((d: TCartItem[]) => {
       setData(d);
+      const _totalCost = d?.reduce(
+        (acc, curr) =>
+          Number(curr?.product?.unit_price) * Number(curr?.quantity) + acc,
+        0
+      );
+      setTotalCost(_totalCost);
     });
   }, []);
   const { data: session } = useSession();
@@ -103,10 +110,10 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex-1">
                     <p>
-                      {item?.quantity}{" "}
+                      ${item?.product?.unit_price} ✖ {item?.quantity}{" "}
                       {item?.product?.unit_name == "n"
                         ? ""
-                        : item?.product?.unit_name}
+                        : item?.product?.unit_name}{" "}
                     </p>
                   </div>
                   <div className="text-right font-medium">
@@ -130,16 +137,17 @@ export default function CheckoutPage() {
             <CardContent className="space-y-2">
               <div className="flex items-center justify-between">
                 <span>Subtotal</span>
-                <span>$139.98</span>
+                <span>${totalCost}</span>
               </div>
+              {/*
               <div className="flex items-center justify-between">
                 <span>Taxes</span>
-                <span>$11.20</span>
-              </div>
+                <span>${(totalCost * 0.2).toFixed(2)}</span>
+              </div>*/}
               <Separator />
               <div className="flex items-center justify-between font-medium">
                 <span>Total</span>
-                <span>$151.18</span>
+                <span>${totalCost}</span>
               </div>
             </CardContent>
           </Card>
