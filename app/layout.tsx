@@ -16,6 +16,7 @@ import Banner from "./home/components/Banner";
 import Footer from "@/components/customUI/Footer";
 import Notification from "@/components/customUI/Notification";
 import { Suspense } from "react";
+import CartProvider from "@/lib/Providers/CartProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,17 +44,19 @@ export default function RootLayout({
     <html lang="en">
       <body className={geistSans.className}>
         <NextAuthSessionProvider>
-          <NavBar />
-          <Banner />
-          <main className="px-2 md:px-8 mx-auto max-w-[1400px]">
-            {" "}
-            {children}
-          </main>
-          <Footer />
-          <Toaster />
-          <Suspense fallback={<p>Loading...</p>}>
-            <Notification />
-          </Suspense>
+          <CartProvider>
+            <NavBar />
+            <Banner />
+            <main className="px-2 md:px-8 mx-auto max-w-[1400px]">
+              {" "}
+              {children}
+            </main>
+            <Footer />
+            <Toaster />
+            <Suspense fallback={<p>Loading...</p>}>
+              <Notification />
+            </Suspense>
+          </CartProvider>
         </NextAuthSessionProvider>
       </body>
     </html>

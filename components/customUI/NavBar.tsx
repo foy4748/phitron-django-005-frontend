@@ -18,10 +18,12 @@ import {
   DropdownMenuSeparator,
 } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
+import useCart from "@/hooks/useCart";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
+  const { cartItems } = useCart();
   const isActive = (route: string) =>
     pathname.startsWith(route) ? "text-primary" : "";
   // If Token expires, hit logout from frontEnd as well.
@@ -68,6 +70,16 @@ const Navbar = () => {
       <div className="flex items-center justify-end">
         {session?.user ? (
           <>
+            {/* Cart Button */}
+            <Link href="/dashboard/user/cart">
+              <Button
+                variant={"secondary"}
+                className="hidden md:block ml-2 mr-2"
+              >
+                Cart {cartItems?.length || ""}
+              </Button>
+            </Link>
+            {/* Dashboard Button */}
             <Link href="/dashboard">
               <Button className="hidden md:block ml-2 mr-2">Dashboard</Button>
             </Link>
