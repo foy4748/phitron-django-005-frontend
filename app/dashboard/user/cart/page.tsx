@@ -13,14 +13,14 @@ export default async function CartList() {
   if (data?.length)
     return (
       <>
-        <section>
+        <section className="space-y-3">
           <Link href={"/dashboard/user/checkout"}>
             <Button>Checkout</Button>
           </Link>
           {Array.isArray(data) &&
             data.map((d) => {
               return (
-                <GridSystem key={d.id} className="relative">
+                <GridSystem key={d.id} className="relative border">
                   <Col>
                     <figure>
                       <Image
@@ -32,17 +32,12 @@ export default async function CartList() {
                     </figure>
                   </Col>
                   <Col className="flex items-center">
-                    <div>
+                    <div className="space-y-2">
                       <h1 className="font-bold text-2xl">
                         {d.product.product_name}
                       </h1>
-                      <p>
-                        Quanitity: {d.quantity} {d.product.unit_name}
-                      </p>
-                      <p>Unit Price : {d.product.unit_price}</p>
-                      <p>
-                        Total Price :{" "}
-                        {Number(d.product.unit_price) * Number(d.quantity)}
+                      <p className="italic font-bold">
+                        $ {d.product.unit_price} / {d.product.unit_name}
                       </p>
                       <p>{d.product.description}</p>
                     </div>
@@ -50,9 +45,14 @@ export default async function CartList() {
                   <Col className="flex items-center justify-center">
                     <UpdateCartItemQuantity cartItem={d} />
                   </Col>
+                  <Col className="flex items-center justify-center">
+                    <p className="font-semibold">
+                      $ {Number(d.product.unit_price) * Number(d.quantity)}
+                    </p>
+                  </Col>
                   <DeleteCartItem
                     id={d.id}
-                    className="absolute top-0 right-0"
+                    className="absolute -top-2 -right-2"
                   />
                 </GridSystem>
               );

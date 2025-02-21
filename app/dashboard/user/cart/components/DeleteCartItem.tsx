@@ -1,5 +1,6 @@
 "use client";
 import { deleteCartItem } from "@/actions/cart/deleteCartItem";
+import { toast } from "@/hooks/use-toast";
 import { CartContext } from "@/lib/Providers/CartProvider";
 import { cn } from "@/lib/utils";
 import { CircleX } from "lucide-react";
@@ -14,6 +15,7 @@ export function DeleteCartItem({
   const { removeAnItemFromCart } = useContext(CartContext);
   const handleDeleteCartItem = async (id: number | `${number}`) => {
     try {
+      toast({ title: "Deleteting ..." });
       const isDeleteOK = await deleteCartItem(id);
       if (isDeleteOK) removeAnItemFromCart();
     } catch (error) {
@@ -23,7 +25,10 @@ export function DeleteCartItem({
   return (
     <>
       <CircleX
-        className={cn("cursor-pointer", className)}
+        className={cn(
+          "cursor-pointer bg-red-400 hover:bg-red-500 rounded-full text-white",
+          className
+        )}
         onClick={() => handleDeleteCartItem(id)}
       />
     </>
