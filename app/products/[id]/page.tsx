@@ -6,22 +6,15 @@ import AddToCartButton from "./components/AddToCartButton";
 import ProductReviewList from "./components/ProductReviewList";
 import AddToWishList from "./components/AddToWishList";
 import { getProductAndUserSpecificWishListItem } from "@/actions/wishList/getProductAndUserSpecificWishListItem";
+import { getSingleProduct } from "@/actions/product/getSingleProduct";
 
 type Props = {
-  params: Promise<{ id: string }>;
-};
-
-const getSingleProduct = async (id: string) => {
-  const S = process.env.NEXT_PUBLIC_SERVER_ADDRESS;
-  const res = await fetch(`${S}/product-detail/${id}`);
-  const data: TSingleProduct = await res.json();
-
-  return data;
+  params: Promise<{ id: number | `${number}` }>;
 };
 
 export default async function ProductDetails({ params }: Props) {
   const { id } = await params;
-  const data = await getSingleProduct(id);
+  const data: TSingleProduct = await getSingleProduct(id);
   const isInWishList = await getProductAndUserSpecificWishListItem(Number(id));
   const { product_owner } = data as { product_owner: TProductOwner };
   return (
