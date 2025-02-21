@@ -243,7 +243,7 @@ export default function RegisterPageView() {
                 Submit
               </Button>
             </div>
-            <p>{JSON.stringify(form.formState.errors)}</p>
+            {/* <p>{JSON.stringify(form.formState.errors)}</p> */}
           </form>
         </Form>
       </div>
