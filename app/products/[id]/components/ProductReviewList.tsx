@@ -21,6 +21,11 @@ export default async function ProductReviewList({ id }: PropType) {
   const data = await getProductReviewList(id);
   return (
     <>
+      {data?.length ? (
+        <h3 className="text-2xl font-bold my-8">Reviews</h3>
+      ) : (
+        <></>
+      )}
       <GridSystem>
         {Array.isArray(data) &&
           data?.map((d) => {

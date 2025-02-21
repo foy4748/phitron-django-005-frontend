@@ -5,25 +5,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu, Sprout } from "lucide-react";
+import { Menu, ShoppingCart, Sprout } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import LogOut from "../LogOut";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
-import useCart from "@/hooks/useCart";
+import { CartContext } from "@/lib/Providers/CartProvider";
+import { Badge } from "../ui/badge";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const { cartItems } = useCart();
+  const { cartItems } = useContext(CartContext);
   const isActive = (route: string) =>
     pathname.startsWith(route) ? "text-primary" : "";
   // If Token expires, hit logout from frontEnd as well.
@@ -40,14 +41,18 @@ const Navbar = () => {
     }
   }, [session?.user]);
   return (
-    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:grid grid-cols-6 gap-6 rounded-2xl w-full">
+    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:justify-around lg:grid grid-cols-6 gap-6 rounded-2xl w-full">
       {/* ICON */}
       <figure className="flex justify-start">
         <Link href="/">
-          <Sprout className={pathname == "/" ? "text-primary" : "opacity-0"} />
+          <Sprout
+            className={
+              !pathname.startsWith("/dashboard") ? "text-primary" : "opacity-0"
+            }
+          />
         </Link>
       </figure>
-      <ul className="hidden md:flex justify-center items-center gap-10 text-card-foreground md:col-span-4">
+      <ul className="hidden lg:flex justify-center items-center gap-10 text-card-foreground md:col-span-4">
         <li className={`font-medium ${pathname == "/" ? "text-primary" : ""}`}>
           <Link href="/">Home</Link>
         </li>
@@ -72,12 +77,21 @@ const Navbar = () => {
           <>
             {/* Cart Button */}
             <Link href="/dashboard/user/cart">
-              <Button
-                variant={"secondary"}
-                className="hidden md:block ml-2 mr-2"
-              >
-                Cart {cartItems?.length || ""}
-              </Button>
+              <div className="relative">
+                <Button
+                  variant={"secondary"}
+                  className="hidden md:block ml-2 mr-2"
+                >
+                  <ShoppingCart />
+                </Button>
+                {cartItems ? (
+                  <Badge className="hidden md:flex absolute h-2 w-2 p-[7px] text-xs rounded-full top-0 right-2 translate-x-1/2 -translate-y-1/2 justify-center items-center outline outline-slate-50 outline-4">
+                    {cartItems || ""}
+                  </Badge>
+                ) : (
+                  <></>
+                )}
+              </div>
             </Link>
             {/* Dashboard Button */}
             <Link href="/dashboard">

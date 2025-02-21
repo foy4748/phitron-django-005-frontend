@@ -2,11 +2,12 @@
 import { addToCart } from "@/actions/cart/addToCart";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { CartContext } from "@/lib/Providers/CartProvider";
 import { TAddToCartPayload } from "@/types/cart";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 const AddToCartButton = () => {
   const params = useParams();
@@ -17,6 +18,8 @@ const AddToCartButton = () => {
   const [isHidden, setIsHidden] = useState(false);
   const increment = () => setQuantity(quantity + 1);
   const decrement = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
+
+  const { addNewItemToCart } = useContext(CartContext);
 
   const handleAddToCart = async () => {
     toast({
@@ -38,10 +41,11 @@ const AddToCartButton = () => {
         toast({
           title: "Added Product to cart",
         });
+        addNewItemToCart();
         setIsHidden(true);
       } else {
         toast({
-          title: "FAILED to add Product to cart",
+          title: "Already added",
         });
       }
     } catch (error) {

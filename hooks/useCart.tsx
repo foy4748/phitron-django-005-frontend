@@ -1,18 +1,21 @@
 "use client";
 
 import { getCartItems } from "@/actions/cart/getCartItems";
-import { TCartItem } from "@/types/cart";
 import { useEffect, useState } from "react";
 
 export default function useCart() {
-  const [cartItems, setCartItems] = useState<TCartItem[]>([]);
+  const [cartItems, setCartItems] = useState<number | `${number}`>(0);
 
   // Initial Cart Item Loading
   useEffect(() => {
     try {
       const handleCartItem = async () => {
         const items = await getCartItems();
-        setCartItems(items || []);
+        setCartItems((prev) => {
+          const currentItems = items?.length;
+          if (currentItems) return currentItems;
+          else return prev;
+        });
       };
       handleCartItem();
     } catch (error) {
@@ -22,17 +25,16 @@ export default function useCart() {
 
   // Add an Item to Cart
 
-  const addNewItemToCart = (item: TCartItem) => {
+  const addNewItemToCart = () => {
     setCartItems((prevItems) => {
-      return [...prevItems, item];
+      return Number(prevItems) + 1;
     });
   };
 
   // Remove an Item from Cart
-  const removeAnItemFromCart = (id: number | `${number}`) => {
+  const removeAnItemFromCart = () => {
     setCartItems((prevItems) => {
-      const filteredItems = prevItems.filter((item) => item.id != id);
-      return filteredItems;
+      return Number(prevItems) - 1 >= 0 ? Number(prevItems) - 1 : 0;
     });
   };
 

@@ -1,8 +1,9 @@
 "use client";
 import useCart from "@/hooks/useCart";
+import { TCartContext } from "@/types/providers/cartProvider";
 import { createContext } from "react";
 
-export const CartContext = createContext({});
+export const CartContext = createContext<TCartContext>({} as TCartContext);
 
 export default function CartProvider({
   children,
