@@ -30,9 +30,12 @@ const geistSans = localFont({
 // });
 
 export const metadata: Metadata = {
-  title: "Super Grocery Shop",
+  title: {
+    template: "%s | Super Grocery Shop",
+    default: "Super Grocery Shop",
+  },
   description:
-    "This is a super grocery shop that provides all the necesarry day-to-day necessities",
+    "This is a super grocery shop that provides all the day-to-day needs",
 };
 
 export default function RootLayout({

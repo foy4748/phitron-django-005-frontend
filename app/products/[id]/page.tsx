@@ -12,6 +12,15 @@ type Props = {
   params: Promise<{ id: number | `${number}` }>;
 };
 
+export async function generateMetadata({ params }: Props) {
+  const { id } = await params;
+  const data: TSingleProduct = await getSingleProduct(id);
+  return {
+    title: data.product_name,
+    description: data.description,
+  };
+}
+
 export default async function ProductDetails({ params }: Props) {
   const { id } = await params;
   const data: TSingleProduct = await getSingleProduct(id);
