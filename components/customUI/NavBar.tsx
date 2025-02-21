@@ -41,7 +41,7 @@ const Navbar = () => {
     }
   }, [session?.user]);
   return (
-    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between md:justify-around lg:grid grid-cols-6 gap-6 rounded-2xl w-full">
+    <Card className="bg-card py-3 px-4 border-0 flex items-center justify-between lg:justify-around lg:grid grid-cols-6 gap-6 rounded-2xl w-full">
       {/* ICON */}
       <figure className="flex justify-start">
         <Link href="/">
@@ -76,27 +76,28 @@ const Navbar = () => {
         {session?.user ? (
           <>
             {/* Cart Button */}
-            <Link href="/dashboard/user/cart">
-              <div className="relative">
-                <Button
-                  variant={"secondary"}
-                  className="hidden md:block ml-2 mr-2"
-                >
-                  <ShoppingCart />
-                </Button>
-                {cartItems ? (
-                  <Badge className="hidden md:flex absolute h-2 w-2 p-[7px] text-xs rounded-full top-0 right-2 translate-x-1/2 -translate-y-1/2 justify-center items-center outline outline-slate-50 outline-4">
-                    {cartItems || ""}
-                  </Badge>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </Link>
-            {/* Dashboard Button */}
-            <Link href="/dashboard">
-              <Button className="hidden md:block ml-2 mr-2">Dashboard</Button>
-            </Link>
+            <div>
+              <Link href="/dashboard/user/cart">
+                <div className="relative">
+                  <Button variant={"secondary"} className="ml-2 mr-2">
+                    <ShoppingCart />
+                  </Button>
+                  {cartItems ? (
+                    <Badge className="hidden md:flex absolute h-2 w-2 p-[7px] text-xs rounded-full top-0 right-2 translate-x-1/2 -translate-y-1/2 justify-center items-center outline outline-slate-50 outline-4">
+                      {cartItems || ""}
+                    </Badge>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </Link>
+            </div>
+            <div>
+              {/* Dashboard Button */}
+              <Link href="/dashboard">
+                <Button className=" ml-2 mr-2">Dashboard</Button>
+              </Link>
+            </div>
             {/* User Avatar Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild className="h-full mx-2">
