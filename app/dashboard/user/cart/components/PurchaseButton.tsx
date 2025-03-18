@@ -2,13 +2,18 @@
 
 import { purchaseCartItem } from "@/actions/cart/purchaseCartItem";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { permanentRedirect } from "next/navigation";
 
 export const handlePurchase = async () => {
   const res = await purchaseCartItem();
   console.log("TEST", res);
-  permanentRedirect(res.GatewayPageURL);
+  if (res.GatewayPageURL) {
+    permanentRedirect(res.GatewayPageURL);
+  } else {
+    toast({ title: "Payment Initialization Failed", variant: "destructive" });
+  }
   // const { success } = res;
   // if (success) {
   //   toast({
