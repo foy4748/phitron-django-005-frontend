@@ -20,7 +20,9 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/actions/auth/loginUser";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+// import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useState } from "react";
 
 const FormSchema = z.object({

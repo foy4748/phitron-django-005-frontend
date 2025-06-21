@@ -1,7 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { usePathname, useRouter } from "next/navigation";
+// import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import {
   Select,
   SelectContent,
@@ -104,12 +106,15 @@ export function SearchAndFilterProductForm({
 
       const filteredValues = Object.entries(values)
         /* eslint @typescript-eslint/no-unused-vars : off */
-        .reduce((acc, [key, value]) => {
-          if (value) acc[key] = value;
-          return acc;
-        }, {} as Record<string, string | number | boolean | null>);
+        .reduce(
+          (acc, [key, value]) => {
+            if (value) acc[key] = value;
+            return acc;
+          },
+          {} as Record<string, string | number | boolean | null>,
+        );
       const queryStr = new URLSearchParams(
-        filteredValues as Record<string, string>
+        filteredValues as Record<string, string>,
       ).toString();
       if (setIsDialogOpen) setIsDialogOpen(false);
       const url = `${pathname}${queryStr ? `?${queryStr}` : ""}`;

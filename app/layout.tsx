@@ -17,6 +17,7 @@ import Footer from "@/components/customUI/Footer";
 import Notification from "@/components/customUI/Notification";
 import { Suspense } from "react";
 import CartProvider from "@/lib/Providers/CartProvider";
+import NextTopLoader from "nextjs-toploader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -48,6 +49,7 @@ export default function RootLayout({
       <body className={geistSans.className}>
         <NextAuthSessionProvider>
           <CartProvider>
+            <NextTopLoader showSpinner={false} color="#1daa5c" />
             <NavBar />
             <Banner />
             <main className="px-2 md:px-8 mx-auto max-w-[1400px]">

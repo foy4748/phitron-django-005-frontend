@@ -11,10 +11,10 @@ export default async function MySoldItems({
 }: {
   searchParams: Promise<ReadonlyURLSearchParams>;
 }) {
-  const mySoldProducts = await getSoldItemList();
   const s = await searchParams;
   const strParams = JSON.stringify(s);
   const params = JSON.parse(strParams);
+  const mySoldProducts = await getSoldItemList();
   return (
     <>
       <section>
