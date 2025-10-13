@@ -2,11 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: "standalone",
   experimental: {
     serverActions: {
       allowedOrigins: [
         // "https://auth-test-backend.vercel.app",
         "http://localhost:3001",
+        "https://phitron-sdt-assignment-05.vercel.app",
       ],
     },
   },
