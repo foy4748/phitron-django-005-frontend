@@ -7,29 +7,35 @@ RUN apk add --no-cache libc6-compat
 # in case you have permission issues.
 WORKDIR /app
 
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY package.json ./
+RUN npm i -g pnpm
+RUN pnpm install 
+# RUN \
+#   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+#   elif [ -f package-lock.json ]; then npm ci; \
+#   elif [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm i --frozen-lockfile; \
+#   else echo "Lockfile not found." && exit 1; \
+#   fi
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY package.json ./
 
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_PRIVATE_STANDALONE=true
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# RUN \
+#   if [ -f yarn.lock ]; then yarn run build; \
+#   elif [ -f package-lock.json ]; then npm run build; \
+#   elif [ -f pnpm-lock.yaml ]; then npm i -g pnpm && pnpm run build; \
+#   else echo "Lockfile not found." && exit 1; \
+#   fi
+RUN npm i -g pnpm
+RUN pnpm build
 
 FROM base AS runner
 WORKDIR /app
