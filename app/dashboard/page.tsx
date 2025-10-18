@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default async function ProfileHomePage() {
   const session = await getServerSession(authOptions);
-  console.log(session?.user?.image_url);
+  console.log("session?.user?.image_url", session?.user?.image_url);
   return (
     <>
       <h1 className="text-3xl font-bold text-center">User Profile</h1>
@@ -18,7 +18,7 @@ export default async function ProfileHomePage() {
             className="rounded-full"
             src={String(
               session?.user?.image_url ||
-                "https://i.ibb.co.com/Nnt2N26/user-placeholder.png"
+                "https://i.ibb.co.com/Nnt2N26/user-placeholder.png",
             )}
             height={120}
             width={120}

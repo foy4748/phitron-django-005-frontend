@@ -30,7 +30,7 @@ export default function ProductCardGridUseClient() {
       const searchParamsObj = new URLSearchParams(s);
       if (!searchParamsObj.get("limit")) searchParamsObj.set("limit", "12");
       const queryStr = searchParamsObj.toString();
-      console.log(queryStr);
+      console.log("queryStr", queryStr);
       const productList: TProductList = await getProductList(queryStr);
       setProductList(productList);
       setLoading(false);

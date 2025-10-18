@@ -21,7 +21,7 @@ import { useSession } from "next-auth/react";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: d } = useSession();
   const { user } = d || {};
-  console.log(user);
+  console.log("user", user);
   const adminRoutes = {
     title: "Admin Dashboard",
     url: "#",

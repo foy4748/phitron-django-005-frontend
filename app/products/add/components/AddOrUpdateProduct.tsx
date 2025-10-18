@@ -103,7 +103,7 @@ export default function AddOrUpdateProduct({
           unit_name: data?.unit_name,
           description: data?.description,
         };
-        console.log(editModeDefault);
+        console.log("editModeDefault", editModeDefault);
         form.reset(editModeDefault);
         setLoading(false);
       };

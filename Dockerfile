@@ -25,7 +25,7 @@ COPY . .
 COPY package.json ./
 
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_PRIVATE_STANDALONE=true
 
 # RUN \
@@ -42,7 +42,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_PRIVATE_STANDALONE=true
 
 RUN addgroup --system --gid 1001 nodejs
@@ -60,7 +60,7 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT=3000
+# ENV PORT=3000
 
 ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
